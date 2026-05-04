@@ -1,0 +1,840 @@
+﻿\documentclass[aspectratio=169,11pt]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{MainBlue}{RGB}{20,65,130}
+\definecolor{AccentRed}{RGB}{180,60,45}
+\definecolor{SoftBg}{RGB}{245,248,252}
+
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\R}{\mathbb{R}}
+
+% Unified Yingxing Beamer footer and visual style.
+\newcommand{\huayinglogo}{assets/logo1.jpg}
+\newcommand{\huayingslogan}{英行培优，成绩无忧；英行相伴，刮目相看}
+
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamercolor{structure}{fg=blue!70!black}
+\setbeamercolor{frametitle}{bg=blue!75!black,fg=white}
+\setbeamercolor{block title}{bg=blue!10,fg=black}
+\setbeamercolor{block body}{bg=blue!2,fg=black}
+\setbeamercolor{author in head/foot}{bg=blue!8,fg=black}
+\setbeamercolor{title in head/foot}{bg=blue!8,fg=black}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,center]{author in head/foot}%
+      \includegraphics[height=2.9ex]{\huayinglogo}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.76\paperwidth,ht=3.8ex,dp=1.2ex,center]{title in head/foot}%
+      \scriptsize \huayingslogan
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,right]{author in head/foot}%
+      \scriptsize \insertframenumber/\inserttotalframenumber\hspace*{1em}
+    \end{beamercolorbox}%
+  }%
+}
+
+\title{导数专题讲义}
+\subtitle{对数、指数与多极值点最值问题}
+\author{}
+\date{2026-05-04}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{专题导读}
+\small
+\begin{block}{核心经验}
+含对数时，优先让 $\ln x$ ``单独作战''；含指数时，优先让 $\e^x$ ``寻找搭档''；指数与对数同时出现时，常通过\alert{作商、拆分、变形}来降阶。
+\end{block}
+
+\begin{enumerate}
+  \item 对数单身狗：把 $\ln x$ 从复杂结构中剥离出来；
+  \item 指数找基友：把 $\e^x$ 与代数式组合，转化为新函数；
+  \item 指对在一起：常作差、作商或引入辅助函数，避免反复求导。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{目录}
+  \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+\end{frame}
+
+\section{专题一：对数与指数型导数问题}
+\subsection{对数单身狗}
+
+\begin{frame}{方法总结：对数单身狗}
+\small
+处理含 $\ln x$ 的不等式或零点问题时，若
+\[
+F(x)=f(x)\ln x+g(x),
+\]
+则可将其改写为
+\[
+\ln x+\frac{g(x)}{f(x)} \quad \text{或} \quad f(x)\left(\ln x+\frac{g(x)}{f(x)}\right).
+\]
+
+\begin{block}{优点}
+\[
+\left(\ln x+\frac{g(x)}{f(x)}\right)'=\frac1x+\left(\frac{g(x)}{f(x)}\right)',
+\]
+求导后不再含超越函数，单调性与极值分析明显简化。
+\end{block}
+
+\begin{alertblock}{适用场景}
+参数范围、不等式恒成立、零点个数、极值点判定。
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{例 1：$(x+1)\ln x-a(x-1)$}
+\small
+已知
+\[
+f(x)=(x+1)\ln x-a(x-1).
+\]
+\begin{enumerate}
+  \item 当 $a=4$ 时，求曲线 $y=f(x)$ 在 $(1,f(1))$ 处的切线；
+  \item 若 $x\in(1,+\infty)$ 时恒有 $f(x)>0$，求 $a$ 的取值范围。
+\end{enumerate}
+
+\pause
+\begin{block}{解题主线}
+\[
+f'(x)=\ln x+\frac{x+1}{x}-a=\ln x+1+\frac1x-a.
+\]
+令
+\[
+\phi(x)=\ln x+1+\frac1x-a,
+\]
+则 $\phi'(x)=\dfrac{x-1}{x^2}$，从而在 $(1,+\infty)$ 上单调递增。
+\end{block}
+\end{frame}
+
+\begin{frame}{例 1 结论整理}
+\small
+\textbf{(1) 切线方程}
+\[
+f(1)=0,\qquad f'(1)=2-a.
+\]
+当 $a=4$ 时，$f'(1)=-2$，故切线方程为
+\[
+y=-2(x-1)= -2x+2.
+\]
+
+\vspace{0.5em}
+\textbf{(2) 参数范围}
+\[
+f(x)>0 \ (x>1)\Longleftrightarrow f'(x)\ge 0 \text{ 在适当区间控制最小值}.
+\]
+因为 $\phi(x)$ 在 $(1,+\infty)$ 单调递增，故
+\[
+\phi(x)>\phi(1)=2-a.
+\]
+要使 $f(x)$ 在 $(1,+\infty)$ 恒正，只需 $2-a\ge 0$，即
+\[
+\boxed{a\le 2}.
+\]
+\end{frame}
+
+\begin{frame}{例 2：切线条件与不等式证明}
+\small
+设
+\[
+f(x)=\frac{a\ln x}{x+1}+\frac{b}{x},
+\]
+且曲线 $y=f(x)$ 在 $(1,f(1))$ 处的切线为
+\[
+x+2y-3=0.
+\]
+
+\begin{block}{第一问}
+由切线过点 $(1,1)$ 且斜率为 $-\dfrac12$，得到
+\[
+f(1)=1,\qquad f'(1)=-\frac12.
+\]
+联立解得
+\[
+\boxed{a=1,\ b=1}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 2：第二问思路}
+\small
+代入第一问结果后，
+\[
+f(x)=\frac{\ln x}{x+1}+\frac1x.
+\]
+
+\begin{alertblock}{目标}
+证明
+\[
+f(x)>\frac{\ln x}{x-1}\qquad (x>0,\ x\ne 1)
+\]
+时，将两边整理成含单个 $\ln x$ 的形式，再研究辅助函数的单调性。
+\end{alertblock}
+\begin{block}{处理方向}
+把不等式移项、通分，转化为
+\[
+\ln x+\psi(x)>0
+\]
+的结构，再对新函数求导；这样导数中不再同时出现复杂的对数分式。
+\end{block}
+\end{frame}
+
+\begin{frame}{对数单身狗：巩固练习}
+\small
+\begin{enumerate}
+  \item 若对任意 $x\ge 1$，
+  \[
+  x\ln x\ge a(x-1),
+  \]
+  求实数 $a$ 的取值范围。
+  \item 已知
+  \[
+  f(x)=ax^2-ax-x\ln x,\qquad f(x)\ge 0,
+  \]
+  求 $a$，并证明 $f(x)$ 存在唯一极大值点。
+  \item 已知
+  \[
+  f(x)=(2+x+ax^2)\ln(1+x)-2x,
+  \]
+  讨论符号并求极大值点条件下的参数 $a$。
+\end{enumerate}
+\end{frame}
+
+\subsection{指数找基友}
+
+\begin{frame}{方法总结：指数找基友}
+\small
+处理含指数函数的不等式时，通常把 $\e^x$ 与代数式\alert{乘除结合}，构造新函数。
+
+\begin{block}{典型变形}
+\[
+\e^x+f(x)>0
+\Longleftrightarrow
+1+\frac{f(x)}{\e^x}>0,
+\]
+\[
+\e^x+f(x)=0
+\Longleftrightarrow
+1+\frac{f(x)}{\e^x}=0.
+\]
+此时
+\[
+\left(1+\frac{f(x)}{\e^x}\right)'=\frac{f'(x)-f(x)}{\e^x},
+\]
+求导后往往退化成多项式或简单有理式。
+\end{block}
+\end{frame}
+
+\begin{frame}{例 3：$f(x)=\e^x-ax^2$}
+\small
+\begin{enumerate}
+  \item 若 $a=1$，证明：当 $x\ge 0$ 时，$f(x)\ge 1$；
+  \item 若 $f(x)$ 在 $(0,+\infty)$ 上只有一个零点，求 $a$。
+\end{enumerate}
+
+\pause
+\begin{block}{第 1 问}
+\[
+\e^x-x^2\ge 1
+\Longleftrightarrow
+(x^2+1)\e^{-x}\le 1.
+\]
+设
+\[
+g(x)=(x^2+1)\e^{-x},
+\]
+则
+\[
+g'(x)=-(x-1)^2\e^{-x}\le 0.
+\]
+故 $g(x)\le g(0)=1$，从而
+\[
+\boxed{\e^x-x^2\ge 1}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 3：唯一零点参数}
+\small
+由
+\[
+\e^x-ax^2=0 \Longleftrightarrow a=\frac{\e^x}{x^2},
+\]
+设
+\[
+\varphi(x)=\frac{\e^x}{x^2},\qquad x>0.
+\]
+则
+\[
+\varphi'(x)=\frac{\e^x(x-2)}{x^3}.
+\]
+
+\begin{block}{单调性}
+\[
+\varphi(x)\text{ 在 }(0,2)\text{ 上递减，在 }(2,+\infty)\text{ 上递增}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 3：参数结论}
+\small
+由上一页可知
+\[
+\varphi_{\min}=\varphi(2)=\frac{\e^2}{4}.
+\]
+
+\begin{block}{关键判断}
+要使方程在 $(0,+\infty)$ 上只有一个解，必须恰有极小值切到参数线。
+\end{block}
+
+因此
+\[
+\boxed{a=\frac{\e^2}{4}}.
+\]
+\end{frame}
+
+\begin{frame}{例 4：$f(x)=\e^x+ax^2-x$}
+\small
+\begin{enumerate}
+  \item 当 $a=1$ 时，讨论 $f(x)$ 的单调性；
+  \item 当 $x\ge 0$ 时，若
+  \[
+  f(x)\ge \frac12x^3+1,
+  \]
+  求 $a$ 的取值范围。
+\end{enumerate}
+
+\begin{block}{结论提炼}
+\[
+f'(x)=\e^x+2x-1.
+\]
+当 $a=1$ 时，因 $f''(x)=\e^x+2>0$，故 $f'$ 递增，且 $f'(0)=0$，
+于是
+\[
+f(x)\text{ 在 }(-\infty,0)\text{ 递减，在 }(0,+\infty)\text{ 递增}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 4：参数范围结果}
+\small
+将不等式化为
+\[
+\left(\frac12x^3-ax^2+x+1\right)\e^{-x}\le 1,\qquad x\ge 0.
+\]
+设
+\[
+g(x)=\left(\frac12x^3-ax^2+x+1\right)\e^{-x},
+\]
+可得
+\[
+g'(x)=-\frac12x(x-2a-1)(x-2)\e^{-x}.
+\]
+
+\begin{block}{分区讨论后结论}
+通过研究 $2a+1$ 与 $2$ 的位置关系，并结合 $g(0)=1$ 与 $g(2)=(7-4a)\e^{-2}$，得到
+\[
+\boxed{a\in \left[\frac{7-\e^2}{4},+\infty\right)}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{指数找基友：巩固练习}
+\small
+\begin{enumerate}
+  \item 已知
+  \[
+  f(x)=\e^x-1-x-ax^2,
+  \]
+  若 $x\ge 0$ 时恒有 $f(x)\ge 0$，求 $a$ 的取值范围。
+  \item 已知
+  \[
+  f(x)=\e^{-x}+ax\quad (a\in \R),
+  \]
+  讨论最值；当 $a=0$ 时，证明
+  \[
+  f(x)>-\frac12x^2+\frac58.
+  \]
+  \item 已知
+  \[
+  f(x)=a(x-1),\qquad g(x)=(ax-1)\e^x,
+  \]
+  讨论相切与不等式整数解问题。
+\end{enumerate}
+\end{frame}
+
+\subsection{指对分手}
+
+\begin{frame}{方法总结：指对分手}
+\small
+当 $\e^x$ 与 $\ln x$ 同时出现时，直接求导往往越来越复杂，因此常采用：
+
+\begin{enumerate}
+  \item 作商：把 $\e^x\ln x$ 改写成 $\ln x\cdot \e^x$ 的比值或乘积；
+  \item 作差：拆成两个单独可控的函数；
+  \item 辅助函数：分别研究两边的最值，再比较大小。
+\end{enumerate}
+
+\begin{block}{典型想法}
+若
+\[
+F(x)=\e^x\ln x-f(x),
+\]
+可尝试构造
+\[
+\frac{F(x)}{\e^x}=\ln x-\frac{f(x)}{\e^x},
+\]
+这样一边保留 $\ln x$，另一边变成指数找基友的形式。
+\end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例 5：$a\e^x\ln x+\dfrac{b\e^{x-1}}{x}$}
+\small
+已知
+\[
+f(x)=a\e^x\ln x+\frac{b\e^{x-1}}{x},
+\]
+其在 $(1,f(1))$ 处的切线为
+\[
+y=\e(x-1)+2.
+\]
+
+\begin{block}{求参}
+由切线条件
+\[
+f(1)=2,\qquad f'(1)=\e,
+\]
+可解得
+\[
+\boxed{a=1,\ b=2}.
+\]
+\end{block}
+
+\pause
+\begin{alertblock}{证明不等式的关键变形}
+代入后
+\[
+f(x)=\e^x\ln x+\frac{2\e^{x-1}}{x}.
+\]
+要证 $f(x)>1$，可化为
+\[
+x\ln x>x\e^{-x}-\frac2{\e}.
+\]
+再分别研究
+\[
+g(x)=x\ln x,\qquad h(x)=x\e^{-x}-\frac2{\e}.
+\]
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{例 5：比较两个辅助函数}
+\small
+\[
+g'(x)=1+\ln x,\qquad h'(x)=\e^{-x}(1-x).
+\]
+
+\begin{columns}[t]
+\column{0.48\textwidth}
+\begin{block}{$g(x)=x\ln x$}
+在 $(0,\e^{-1}]$ 上递减，在 $[\e^{-1},+\infty)$ 上递增，
+\[
+g_{\min}=g(\e^{-1})=-\frac1{\e}.
+\]
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{$h(x)=x\e^{-x}-\dfrac2{\e}$}
+在 $(0,1]$ 上递增，在 $[1,+\infty)$ 上递减，
+\[
+h_{\max}=h(1)=-\frac1{\e}.
+\]
+\end{block}
+\end{columns}
+
+\vspace{0.4em}
+由于最小值与最大值虽都为 $-\dfrac1{\e}$，但不能在同一点同时取到，故
+\[
+g(x)>h(x)\quad (x>0),
+\]
+从而
+\[
+\boxed{f(x)>1}.
+\]
+\end{frame}
+
+\begin{frame}{例 6}
+\small
+\[
+f(x)=\frac1x+a\ln x,\qquad g(x)=\frac{\e^x}{x}.
+\]
+\begin{enumerate}
+  \item 讨论函数 $f(x)$ 的单调性；
+  \item 当 $a=1$ 时，证明
+  \[
+  f(x)+g(x)-\left(1+\frac{\e}{x^2}\right)\ln x>\e.
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{指对分手：巩固训练}
+\small
+\begin{enumerate}
+  \item 设
+  \[
+  f(x)=\frac{\ln x+1}{x},
+  \]
+  证明当 $x>1$ 时，
+  \[
+  \frac{f(x)}{\e+1}>\frac{2\e^{x-1}}{(x+1)(x\e^x+1)}.
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{指对分手：巩固训练续}
+\small
+\begin{enumerate}
+  \item[2.] 已知
+  \[
+  f(x)=\e^x-a\ln x-a,\quad a>0,
+  \]
+  当 $a=\e$ 时求极值，并证明
+  \[
+  \e^{2x-2}-\e^{x-1}\ln x-x\ge 0.
+  \]
+\end{enumerate}
+\end{frame}
+
+\subsection{专题一小结}
+
+\begin{frame}{专题小结}
+\small
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.68\textwidth}}
+\toprule
+题型特征 & 首选策略 \\
+\midrule
+含 $\ln x$ 的不等式、零点、参数范围 & 提出或孤立 $\ln x$，构造 $\ln x+\dfrac{g(x)}{f(x)}$ \\
+含 $\e^x$ 的恒成立或零点问题 & 让 $\e^x$ 与代数式配对，构造 $1+\dfrac{f(x)}{\e^x}$ \\
+同时含 $\e^x,\ln x$ & 作差、作商、分离成两个可控函数比较最值 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{alertblock}{最后提醒}
+真正决定得分的不是公式记忆，而是看出\alert{该让谁单独作战、该让谁结伴同行、该在什么时候果断分手}。
+\end{alertblock}
+\end{frame}
+
+\section{专题二：多极值点函数最值问题}
+
+\begin{frame}{专题二导入}
+\small
+\begin{block}{主题}
+处理多极值点函数最值问题的五种途径。
+\end{block}
+
+这类问题的共同难点在于：
+\begin{enumerate}
+  \item 导函数有多个零点，极值点之间存在隐藏关系；
+  \item 目标式往往同时含有 $x_1,x_2$ 甚至参数 $a$；
+  \item 直接代入计算很乱，必须先\alert{消元}或\alert{降元}。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{基本原理}
+\small
+\begin{enumerate}
+  \item 由导函数零点关系消元，构造只含单个极值点 $x_1$ 或 $x_2$ 的函数；
+  \item 由韦达关系消元，把目标式转化为参数 $a$ 的函数；
+  \item 构造齐次式，引入比值
+  \[
+  t=\frac{x_2}{x_1}\quad \text{或}\quad t=\frac{x_1}{x_2};
+  \]
+  \item 使用对数平均不等式；
+  \item 利用特殊三变量结构或隐含对称性，例如 $x_1x_2=1$。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{五种途径速览}
+\small
+\begin{columns}[t]
+\column{0.48\textwidth}
+\begin{block}{途径 1}
+构建单个极值点函数：
+\[
+F(x_1)\ \text{或}\ F(x_2).
+\]
+\end{block}
+
+\begin{block}{途径 2}
+构建参数函数：
+\[
+G(a).
+\]
+\end{block}
+
+\column{0.48\textwidth}
+\begin{block}{途径 3}
+构造齐次式：
+\[
+t=\frac{x_2}{x_1},\quad t>1.
+\]
+\end{block}
+
+\begin{block}{途径 4-5}
+对数平均不等式；三极值点中的对称与倒数关系。
+\end{block}
+\end{columns}
+
+\vspace{0.4em}
+\begin{alertblock}{判断标准}
+看到 $x_1+x_2,\ x_1x_2,\ \ln x_1-\ln x_2,\ \dfrac{x_1}{x_2}$ 这类结构，就该优先考虑消元。
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{两个高频模型}
+\small
+原文中特别强调了两个函数模型：
+\[
+f(x)=x-\frac1x-a\ln x,
+\qquad
+g(x)=(x+1)\ln x-a(x-1).
+\]
+
+\begin{block}{共同特征}
+当零点结构合适时，$x=1$ 往往是特殊点；若还存在另外两个零点 $x_1,x_3$，常出现
+\[
+x_1x_3=1.
+\]
+\end{block}
+
+\begin{alertblock}{意义}
+这类倒数关系可以把双变量问题降成单变量问题，是处理多极值点最值题的核心切口。
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{例 1：构建单个极值点函数}
+\small
+已知
+\[
+f(x)=\frac1x-x+a\ln x.
+\]
+\begin{enumerate}
+  \item 讨论 $f(x)$ 的单调性；
+  \item 若 $f(x)$ 存在两个极值点 $x_1,x_2$，证明
+  \[
+  \frac{f(x_1)-f(x_2)}{x_1-x_2}<a-2.
+  \]
+\end{enumerate}
+
+\begin{block}{关键关系}
+由 $f'(x)=0$ 得
+\[
+x^2-ax+1=0,
+\]
+故极值点满足
+\[
+x_1x_2=1.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 1：证明思路}
+\small
+利用 $x_1x_2=1$，原式可化简为只含单个极值点的表达式。
+
+核心是把
+\[
+\frac{f(x_1)-f(x_2)}{x_1-x_2}
+\]
+转化为
+\[
+-2+a\cdot \frac{2\ln x_2}{x_2-\frac1{x_2}}.
+\]
+
+进一步只需证明
+\[
+\frac1{x_2}-x_2+2\ln x_2<0\qquad (x_2>1).
+\]
+
+\begin{block}{辅助函数}
+设
+\[
+h(x)=\frac1x-x+2\ln x.
+\]
+由单调性知 $h(x)$ 在 $(1,+\infty)$ 上递减，且 $h(1)=0$，因此 $h(x_2)<0$。
+\end{block}
+\end{frame}
+
+\begin{frame}{例 2：构建参数函数}
+\small
+设
+\[
+f(x)=ax^2+(2a-1)x+\ln(x+1)
+\]
+有两个极值点 $x_1,x_2$。
+
+\begin{enumerate}
+  \item 求 $a$ 的取值范围；
+  \item 证明
+  \[
+  f(x_1)+f(x_2)<2\ln 2-\frac54.
+  \]
+\end{enumerate}
+
+\begin{block}{第一问结论}
+由 $f'(x)=0$ 转化得到关于 $x+1$ 的二次方程有两个不等正根，从而
+\[
+\boxed{0<a<\frac18}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例 2：降到参数}
+\small
+借助韦达关系，可把
+\[
+f(x_1)+f(x_2)
+\]
+完全化为参数函数
+\[
+f(x_1)+f(x_2)=1-\frac1{4a}-2a-\ln(2a).
+\]
+
+令
+\[
+t=2a,\qquad 0<t<\frac14,
+\]
+则只需研究
+\[
+g(t)=1-\frac1{2t}-t-\ln t.
+\]
+
+\begin{block}{结论}
+由导数分析得 $g(t)$ 单调递增，因此
+\[
+f(x_1)+f(x_2)<g\!\left(\frac14\right)=2\ln 2-\frac54.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例 3：构造齐次式}
+\small
+已知
+\[
+f(x)=2x-a\ln x-\frac1x
+\]
+有两个不同极值点 $x_1>x_2$。
+
+\begin{enumerate}
+  \item 求 $a$ 的取值范围；
+  \item 若 $a>3$，求证 $x_1>1$，且
+  \[
+  \frac{f(x_1)-f(x_2)}{x_1+x_2}<\frac43-2\ln 2.
+  \]
+\end{enumerate}
+
+\begin{block}{核心变形}
+由极值点方程得到
+\[
+x_1+x_2=\frac a2,\qquad x_1x_2=\frac12.
+\]
+再令
+\[
+t=\frac{x_1}{x_2}>2,
+\]
+目标式被化为单变量函数
+\[
+h(t)=\frac{4(t-1)}{t+1}-2\ln t.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{例 3：单变量收口}
+\small
+\[
+h(t)=\frac{4(t-1)}{t+1}-2\ln t,\qquad t>2.
+\]
+求导得
+\[
+h'(t)=\frac{8}{(t+1)^2}-\frac2t<0.
+\]
+
+\begin{block}{结论}
+$h(t)$ 在 $(2,+\infty)$ 上递减，因此
+\[
+h(t)<h(2)=\frac43-2\ln 2.
+\]
+从而原不等式成立。
+\end{block}
+\end{frame}
+
+\begin{frame}{对数平均不等式法}
+\small
+若已知极值点满足 $x_1x_2=1$，且目标式中出现
+\[
+\frac{\ln x_1-\ln x_2}{x_1-x_2},
+\]
+则可以直接联想到对数平均不等式。
+
+\begin{block}{作用}
+它能把含对数差商的表达式直接估住，省掉一轮辅助函数构造。
+\end{block}
+
+\begin{alertblock}{记忆点}
+当结构里同时出现
+\[
+x_1x_2=1,\qquad \ln x_1-\ln x_2,\qquad x_1-x_2,
+\]
+对数平均通常就是捷径。
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{三极值点与新定义问题}
+\small
+原文后半部分还讨论了“三极值点问题中的奥秘”和“极值差比系数”等新定义题。
+
+\begin{block}{可提炼的经验}
+\begin{enumerate}
+  \item 若出现三个极值点，先看导函数是否能拆成三零点结构；
+  \item 先找对称中心、倒数关系、参数区间，再决定是否计算；
+  \item 新定义问题本质上仍是把极大值与极小值差转化为单参数函数。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}{专题二小结}
+\small
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\textwidth} >{\raggedright\arraybackslash}p{0.64\textwidth}}
+\toprule
+结构特征 & 首选方法 \\
+\midrule
+已知两个极值点满足方程关系 & 韦达消元，转成单个极值点函数 \\
+目标式含 $x_1+x_2,\ x_1x_2$ & 参数化，转成 $G(a)$ \\
+目标式含比值、对数差、齐次分式 & 设 $t=\dfrac{x_2}{x_1}$ 或 $t=\dfrac{x_1}{x_2}$ \\
+出现 $\dfrac{\ln x_1-\ln x_2}{x_1-x_2}$ & 对数平均不等式 \\
+出现三个极值点或新定义 & 先画零点结构，再找对称与倒数关系 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+\end{document}

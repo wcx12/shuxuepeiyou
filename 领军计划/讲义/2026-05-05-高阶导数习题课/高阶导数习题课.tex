@@ -1,0 +1,979 @@
+﻿\documentclass[aspectratio=169,10pt]{ctexbeamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+
+\newcommand{\e}{\mathrm{e}}
+
+% Unified Yingxing Beamer footer and visual style.
+\newcommand{\huayinglogo}{assets/logo1.jpg}
+\newcommand{\huayingslogan}{英行培优，成绩无忧；英行相伴，刮目相看}
+
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamercolor{structure}{fg=blue!70!black}
+\setbeamercolor{frametitle}{bg=blue!75!black,fg=white}
+\setbeamercolor{block title}{bg=blue!10,fg=black}
+\setbeamercolor{block body}{bg=blue!2,fg=black}
+\setbeamercolor{author in head/foot}{bg=blue!8,fg=black}
+\setbeamercolor{title in head/foot}{bg=blue!8,fg=black}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,center]{author in head/foot}%
+      \includegraphics[height=2.9ex]{\huayinglogo}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.76\paperwidth,ht=3.8ex,dp=1.2ex,center]{title in head/foot}%
+      \scriptsize \huayingslogan
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,right]{author in head/foot}%
+      \scriptsize \insertframenumber/\inserttotalframenumber\hspace*{1em}
+    \end{beamercolorbox}%
+  }%
+}
+
+\title{高阶导数习题课}
+\subtitle{Leibniz 公式、隐函数与参数方程求导}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[t]{概念 1：Leibniz 公式}
+\small
+\begin{block}{乘积的 $n$ 阶导数}
+若函数 $u(x),v(x)$ 足够光滑，则
+\[
+(uv)^{(n)}=\sum_{k=0}^n \binom{n}{k}u^{(k)}v^{(n-k)}.
+\]
+\end{block}
+
+\begin{block}{使用要点}
+\begin{enumerate}
+  \item 若一个因子是低次多项式，则高阶求导后很快为 $0$；
+  \item 若另一个因子是三角函数、指数函数，则高阶导数往往有规律；
+  \item 因此它特别适合处理“多项式 $\times$ 基本初等函数”。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 1}
+\small
+\begin{block}{题目}
+计算
+\[
+\bigl(x^2\sin x\bigr)^{(80)}.
+\]
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}用 Leibniz 公式，抓住 $x^2$ 的三阶及以上导数都为 $0$。
+\end{frame}
+
+\begin{frame}[t]{例题 1 解答}
+\small
+由 Leibniz 公式，
+\[
+\bigl(x^2\sin x\bigr)^{(80)}
+=x^2(\sin x)^{(80)}
++\binom{80}{1}(x^2)'(\sin x)^{(79)}
++\binom{80}{2}(x^2)''(\sin x)^{(78)}.
+\]
+这里之所以只有三项，是因为
+\[
+(x^2)'=2x,\qquad (x^2)''=2,\qquad (x^2)^{(k)}=0\ (k\ge 3).
+\]
+再利用
+\[
+(\sin x)^{(80)}=\sin x,\quad
+(\sin x)^{(79)}=-\cos x,\quad
+(\sin x)^{(78)}=-\sin x.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 1 解答（续）}
+\small
+代入得
+\[
+\bigl(x^2\sin x\bigr)^{(80)}
+=x^2\sin x+\binom{80}{1}\cdot 2x\cdot(-\cos x)+\binom{80}{2}\cdot 2\cdot(-\sin x).
+\]
+又因为
+\[
+\binom{80}{1}=80,\qquad
+\binom{80}{2}=\frac{80\cdot79}{2}=3160,
+\]
+所以
+\[
+\bigl(x^2\sin x\bigr)^{(80)}
+=x^2\sin x-160x\cos x-6320\sin x.
+\]
+整理为
+\[
+\boxed{\bigl(x^2\sin x\bigr)^{(80)}=(x^2-6320)\sin x-160x\cos x.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 1 讲解提醒}
+\small
+\begin{block}{易错点}
+\begin{enumerate}
+  \item $(\sin x)^{(79)}=-\cos x,\ (\sin x)^{(78)}=-\sin x$ 的符号容易写错；
+  \item 组合数 $\binom{80}{1},\binom{80}{2}$ 容易漏掉；
+  \item 如果没先看出 $(x^2)^{(k)}=0\ (k\ge3)$，就会做无效展开。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 2}
+\small
+\begin{block}{题目}
+设
+\[
+f(x)=\frac{2x}{1-x^2},
+\]
+求 $f^{(n)}(x)$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}先做部分分式分解，再分别总结两类基本分式的 $n$ 阶导数。
+\end{frame}
+
+\begin{frame}[t]{例题 2 解答}
+\small
+先作部分分式分解。设
+\[
+\frac{2x}{1-x^2}=\frac{A}{1-x}+\frac{B}{1+x},
+\]
+则
+\[
+2x=A(1+x)+B(1-x)=(A+B)+(A-B)x.
+\]
+比较系数得
+\[
+A+B=0,\qquad A-B=2.
+\]
+解得
+\[
+A=1,\qquad B=-1.
+\]
+因此
+\[
+f(x)=\frac{1}{1-x}-\frac{1}{1+x}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 2 解答（续 1）}
+\small
+于是
+\[
+f^{(n)}(x)=\left(\frac{1}{1-x}\right)^{(n)}-\left(\frac{1}{1+x}\right)^{(n)}.
+\]
+先看第一项。因为
+\[
+\frac{d}{dx}(1-x)^{-1}=(-1)(1-x)^{-2}\cdot(-1)=(1-x)^{-2},
+\]
+继续求导可得规律
+\[
+\left(\frac{1}{1-x}\right)^{(n)}=\frac{n!}{(1-x)^{n+1}}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 2 解答（续 2）}
+\small
+再看第二项。因为
+\[
+\frac{d}{dx}(1+x)^{-1}=-(1+x)^{-2},
+\]
+继续求导可得
+\[
+\left(\frac{1}{1+x}\right)^{(n)}=\frac{(-1)^n n!}{(1+x)^{n+1}}.
+\]
+因此
+\[
+f^{(n)}(x)
+=\frac{n!}{(1-x)^{n+1}}-\frac{(-1)^n n!}{(1+x)^{n+1}}.
+\]
+故
+\[
+\boxed{
+f^{(n)}(x)=
+n!\left[\frac{1}{(1-x)^{n+1}}-\frac{(-1)^n}{(1+x)^{n+1}}\right].
+}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 2 板书顺序}
+\small
+\begin{block}{板书顺序}
+\begin{enumerate}
+  \item 先完整写出部分分式分解；
+  \item 再分别写出两类基本分式的 $n$ 阶导数；
+  \item 最后合并，不要一开始就跳到结论。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 3}
+\small
+\begin{block}{题目}
+设 $y=\arcsin x$，求 $y^{(n)}(0)$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}这题不适合硬算高阶导数，要先构造递推关系，再利用奇偶性和初值。
+\end{frame}
+
+\begin{frame}[t]{例题 3 解答}
+\small
+先由反三角函数求导公式得
+\[
+y'=\frac{1}{\sqrt{1-x^2}}.
+\]
+改写为
+\[
+y'\sqrt{1-x^2}=1.
+\]
+两边对 $x$ 求导：
+\[
+y''\sqrt{1-x^2}+y'\cdot\frac12(1-x^2)^{-1/2}\cdot(-2x)=0.
+\]
+即
+\[
+y''\sqrt{1-x^2}-y'\frac{x}{\sqrt{1-x^2}}=0.
+\]
+两边同乘 $\sqrt{1-x^2}$，得到
+\[
+(1-x^2)y''-xy'=0.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 3 解答（续 1）}
+\small
+现在对恒等式
+\[
+(1-x^2)y''-xy'=0
+\]
+作 $n$ 阶求导。
+
+由 Leibniz 公式，
+\[
+\bigl[(1-x^2)y''\bigr]^{(n)}
+=(1-x^2)y^{(n+2)}+n(-2x)y^{(n+1)}+\binom{n}{2}(-2)y^{(n)}.
+\]
+所以
+\[
+\bigl[(1-x^2)y''\bigr]^{(n)}
+=(1-x^2)y^{(n+2)}-2nxy^{(n+1)}-n(n-1)y^{(n)}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 3 解答（续 2）}
+\small
+又因为
+\[
+(xy')^{(n)}=xy^{(n+1)}+ny^{(n)}.
+\]
+代回
+\[
+\bigl[(1-x^2)y''\bigr]^{(n)}-(xy')^{(n)}=0
+\]
+得到递推关系
+\[
+(1-x^2)y^{(n+2)}-(2n+1)xy^{(n+1)}-n^2y^{(n)}=0.
+\]
+令 $x=0$，得
+\[
+y^{(n+2)}(0)=n^2y^{(n)}(0).
+\]
+又因为 $\arcsin x$ 是奇函数，所以
+\[
+y^{(2k)}(0)=0\qquad (k=0,1,2,\dots).
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 3 解答（续 3）}
+\small
+再计算奇阶导数。由
+\[
+y'(0)=\frac{1}{\sqrt{1-0}}=1
+\]
+和递推式
+\[
+y^{(n+2)}(0)=n^2y^{(n)}(0),
+\]
+依次得
+\[
+y^{(3)}(0)=1^2y'(0)=1,
+\]
+\[
+y^{(5)}(0)=3^2y^{(3)}(0)=3^2,
+\]
+\[
+y^{(7)}(0)=5^2y^{(5)}(0)=5^2\cdot3^2.
+\]
+因此归纳得
+\[
+y^{(2k+1)}(0)=[(2k-1)!!]^2\qquad (k=0,1,2,\dots).
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 3 解答（续 4）}
+\small
+综上，
+\[
+\boxed{
+y^{(2k)}(0)=0,\qquad
+y^{(2k+1)}(0)=[(2k-1)!!]^2.
+}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 3 讲解提醒}
+\small
+\begin{block}{易错点}
+\begin{enumerate}
+  \item 只会算前几阶，却没有把递推式真正写出来；
+  \item 忘记 $\arcsin x$ 是奇函数，从而偶阶导数在 $0$ 点全为 $0$；
+  \item 把双阶乘 $(2k-1)!!$ 和普通阶乘混淆。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 4}
+\small
+\begin{block}{题目}
+设
+\[
+f(x)=
+\begin{cases}
+\e^{-1/x^2}, & x\ne 0,\\
+0, & x=0,
+\end{cases}
+\]
+证明 $f^{(n)}(0)=0\ (n\in\mathbb N_+)$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}核心不是逐阶硬算，而是抓住 $\e^{-1/x^2}$ 在 $x\to0$ 时比任何幂次都更快趋于 $0$。
+\end{frame}
+
+\begin{frame}[t]{例题 4 解答}
+\small
+先用一个基本事实：对任意 $\alpha>0$，
+\[
+\lim_{u\to+\infty}\frac{u^\alpha}{\e^u}=0.
+\]
+由导数定义，
+\[
+f'(0)=\lim_{x\to0}\frac{f(x)-f(0)}{x}
+=\lim_{x\to0}\frac{\e^{-1/x^2}}{x}.
+\]
+令
+\[
+u=\frac1{x^2},
+\]
+则当 $x\to0$ 时，$u\to+\infty$，上式相当于
+\[
+u^{1/2}\e^{-u}\to0.
+\]
+因此
+\[
+f'(0)=0.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 4 解答（续 1）}
+\small
+对 $x\ne0$，
+\[
+f'(x)=\left(\e^{-1/x^2}\right)'=\e^{-1/x^2}\cdot\frac{2}{x^3}
+=\frac{2}{x^3}\e^{-1/x^2}.
+\]
+于是
+\[
+f''(0)=\lim_{x\to0}\frac{f'(x)-f'(0)}{x}
+=\lim_{x\to0}\frac{2}{x^4}\e^{-1/x^2}.
+\]
+仍令
+\[
+u=\frac1{x^2},
+\]
+则上式化为
+\[
+2u^2\e^{-u}\to0.
+\]
+所以
+\[
+f''(0)=0.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 4 解答（续 2）}
+\small
+继续对 $x\ne0$ 反复求导，可归纳得到
+\[
+f^{(n)}(x)=P_n\!\left(\frac1x\right)\e^{-1/x^2},
+\]
+其中 $P_n$ 是某个关于 $\dfrac1x$ 的多项式。
+
+下面用数学归纳法证明 $f^{(n)}(0)=0$。
+
+当 $n=1,2$ 时，上面已经证明。
+设当 $n=k$ 时成立，即
+\[
+f^{(k)}(0)=0.
+\]
+则
+\[
+f^{(k+1)}(0)=\lim_{x\to0}\frac{f^{(k)}(x)-f^{(k)}(0)}{x}
+=\lim_{x\to0}\frac1xP_k\!\left(\frac1x\right)\e^{-1/x^2}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 4 解答（续 3）}
+\small
+注意到
+\[
+\frac1xP_k\!\left(\frac1x\right)
+\]
+仍然只是 $\dfrac1x$ 的一个多项式，因此它的每一项都形如
+\[
+c_mx^{-m}.
+\]
+所以极限中的每一项都形如
+\[
+c_mx^{-m}\e^{-1/x^2}.
+\]
+令
+\[
+u=\frac1{x^2}
+\]
+后，就化成
+\[
+Cu^\beta\e^{-u}\to0.
+\]
+因此整个极限为 $0$，即
+\[
+f^{(k+1)}(0)=0.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 4 解答（续 4）}
+\small
+由数学归纳法，对任意正整数 $n$ 都有
+\[
+\boxed{f^{(n)}(0)=0.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 4 讲解提醒}
+\small
+\begin{block}{教学提醒}
+这题的本质不是“每次求导都刚好能算出来”，而是因为
+\[
+\e^{-1/x^2}
+\]
+在 $x\to0$ 时衰减得比任何有限次幂都快，所以所有这类极限都会回到 $0$。
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 5}
+\small
+\begin{block}{题目}
+将 $(-\infty,0]$ 上的常值函数 $u(x)\equiv0$ 和 $[1,+\infty)$ 上的常值函数 $v(x)\equiv1$ 延拓为 $(-\infty,+\infty)$ 上的无穷次可微函数，并使其值域为 $[0,1]$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}先造一个在左侧恒为 $0$、右侧平滑抬起的函数，再通过比值把两端平滑连接。
+\end{frame}
+
+\begin{frame}[t]{例题 5 解答}
+\small
+先定义
+\[
+g(x)=
+\begin{cases}
+0, & x\le0,\\
+\e^{-1/x^2}, & x>0.
+\end{cases}
+\]
+再令
+\[
+f(x)=\frac{g(x)}{g(x)+g(1-x)}.
+\]
+下面分区间验证它满足要求。
+\end{frame}
+
+\begin{frame}[t]{例题 5 解答（续）}
+\small
+\begin{enumerate}
+  \item 当 $x\le0$ 时，$g(x)=0$，而 $1-x\ge1$，故 $g(1-x)>0$，于是
+  \[
+  f(x)=\frac{0}{0+g(1-x)}=0.
+  \]
+  \item 当 $x\ge1$ 时，$1-x\le0$，故 $g(1-x)=0$，且 $g(x)>0$，于是
+  \[
+  f(x)=\frac{g(x)}{g(x)+0}=1.
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{例题 5 解答（续）}
+\small
+\begin{enumerate}
+\setcounter{enumi}{2}
+  \item 当 $0<x<1$ 时，$g(x)>0,\ g(1-x)>0$，所以
+  \[
+  0<\frac{g(x)}{g(x)+g(1-x)}<1.
+  \]
+  \item 由上一题知 $g$ 在整个实轴上是 $C^\infty$ 的；又因为分母恒正，所以 $f$ 也是 $C^\infty$ 的。
+\end{enumerate}
+因此所求延拓函数可以取为
+\[
+\boxed{f(x)=\frac{g(x)}{g(x)+g(1-x)}.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 5 讲解提醒}
+\small
+\begin{block}{易错点}
+\begin{enumerate}
+  \item 只验证端点常值，没有验证中间区间 $0<f(x)<1$；
+  \item 忽略分母恒正这一点；
+  \item 说“显然光滑”，却没有说明这是由上一题推出的。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{概念 2：隐函数求导法}
+\small
+\begin{block}{基本思想}
+若函数关系由方程
+\[
+F(x,y)=0
+\]
+确定，并且其中 $y=y(x)$，则把 $y$ 看成 $x$ 的函数，对恒等式
+\[
+F(x,y(x))\equiv0
+\]
+两边对 $x$ 求导，从而求出 $y'(x)$。
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{概念 2：隐函数求导法}
+\small
+\begin{block}{反函数求导公式}
+若 $y=y(x)$ 与 $x=x(y)$ 互为反函数，则
+\[
+\boxed{y'(x)=\frac{1}{x'(y)}}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 6}
+\small
+\begin{block}{题目}
+设函数 $x=x(y)$ 满足 Kepler 方程
+\[
+y=x-q\sin x\qquad (0<q<1),
+\]
+求 $x'(y)$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}把 $x$ 看成 $y$ 的函数，直接对恒等式关于 $y$ 求导。
+\end{frame}
+
+\begin{frame}[t]{例题 6 解答}
+\small
+把 $x=x(y)$ 代入原方程，得到关于 $y$ 的恒等式
+\[
+y-x(y)+q\sin x(y)=0.
+\]
+对 $y$ 求导：
+\[
+1-x'(y)+q\cos x(y)\cdot x'(y)=0.
+\]
+把含 $x'(y)$ 的项并到一起：
+\[
+\bigl[-1+q\cos x(y)\bigr]x'(y)=-1.
+\]
+因此
+\[
+\boxed{x'(y)=\frac{1}{1-q\cos x(y)}.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 6 讲解提醒}
+\small
+\begin{block}{易错点}
+\begin{enumerate}
+  \item 对 $\sin x(y)$ 求导时漏写 $x'(y)$；
+  \item 最终答案里把 $x(y)$ 误写成 $x$；
+  \item 没说明这里是对变量 $y$ 求导。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 7}
+\small
+\begin{block}{题目}
+设函数 $y=y(x)$ 满足单位圆方程
+\[
+x^2+y^2=1,
+\]
+分别用显式方法和隐式方法求 $y'(x)$，并作比较。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}显式法针对某一支，隐式法给出统一公式。
+\end{frame}
+
+\begin{frame}[t]{例题 7 解答}
+\small
+\textbf{显式法：}
+由单位圆方程可写成两支
+\[
+y_1=\sqrt{1-x^2},\qquad y_2=-\sqrt{1-x^2}.
+\]
+分别求导，得
+\[
+y_1'=\frac12(1-x^2)^{-1/2}\cdot(-2x)=-\frac{x}{\sqrt{1-x^2}},
+\]
+\[
+y_2'=-\frac12(1-x^2)^{-1/2}\cdot(-2x)=\frac{x}{\sqrt{1-x^2}}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 7 解答（续）}
+\small
+\textbf{隐式法：}
+把 $y$ 看成 $x$ 的函数，由
+\[
+x^2+y^2(x)=1
+\]
+两边对 $x$ 求导：
+\[
+2x+2y(x)y'(x)=0.
+\]
+解得
+\[
+\boxed{y'(x)=-\frac{x}{y(x)}.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 7 解答（续）}
+\small
+当
+\[
+y(x)=\sqrt{1-x^2}
+\]
+时，代入得
+\[
+y'(x)=-\frac{x}{\sqrt{1-x^2}}.
+\]
+当
+\[
+y(x)=-\sqrt{1-x^2}
+\]
+时，代入得
+\[
+y'(x)=\frac{x}{\sqrt{1-x^2}}.
+\]
+所以隐式法给出统一公式，显式法则是分别对每一支求导。
+\end{frame}
+
+\begin{frame}[t]{例题 7 讲解提醒}
+\small
+\begin{block}{教学提醒}
+讲这题时要提醒学生：由方程确定的“函数”不一定只有一支，隐函数公式中的 $y(x)$ 必须连同具体分支一起理解。
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 8}
+\small
+\begin{block}{题目}
+设函数 $y=y(x)$ 可导，且满足
+\[
+x^2+xy+y^2=1,
+\]
+求 $y'$, $y''$, $y'''$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}一直在隐式关系上求导，不要先把 $y$ 解出来。
+\end{frame}
+
+\begin{frame}[t]{例题 8 解答}
+\small
+先对
+\[
+x^2+xy+y^2=1
+\]
+求导，得
+\[
+2x+y+xy'+2yy'=0.
+\]
+把 $y'$ 的项合并：
+\[
+(x+2y)y'=-(2x+y),
+\]
+因此
+\[
+\boxed{y'=-\frac{2x+y}{x+2y}.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 8 解答（续 1）}
+\small
+再对恒等式
+\[
+2x+y+xy'+2yy'=0
+\]
+求导：
+\[
+2+y'+(xy')'+2(y')^2+2yy''=0.
+\]
+又因为
+\[
+(xy')'=y'+xy'',
+\]
+所以
+\[
+2+2y'+xy''+2(y')^2+2yy''=0.
+\]
+整理得
+\[
+(x+2y)y''+2+2y'+2(y')^2=0.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 8 解答（续 2）}
+\small
+把
+\[
+y'=-\frac{2x+y}{x+2y}
+\]
+代入，得
+\[
+(x+2y)y''
+=-2+2\frac{2x+y}{x+2y}-2\left(\frac{2x+y}{x+2y}\right)^2.
+\]
+通分后
+\[
+(x+2y)y''
+=\frac{-2(x+2y)^2+2(2x+y)(x+2y)-2(2x+y)^2}{(x+2y)^2}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 8 解答（续 3）}
+\small
+展开并整理分子：
+\[
+-2(x^2+4xy+4y^2)+2(2x^2+5xy+2y^2)-2(4x^2+4xy+y^2)
+\]
+\[
+=-6x^2-6xy-6y^2
+\]
+\[
+=-6(x^2+xy+y^2).
+\]
+而题设给出
+\[
+x^2+xy+y^2=1,
+\]
+故
+\[
+(x+2y)y''=-\frac{6}{(x+2y)^2}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 8 解答（续 4）}
+\small
+于是
+\[
+\boxed{y''=-\frac{6}{(x+2y)^3}.}
+\]
+
+再对上式求导：
+\[
+y'''=-6\cdot(-3)(x+2y)^{-4}(1+2y').
+\]
+又由
+\[
+1+2y'=1-\frac{2(2x+y)}{x+2y}
+=\frac{x+2y-4x-2y}{x+2y}
+=-\frac{3x}{x+2y},
+\]
+得
+\[
+\boxed{y'''=-\frac{54x}{(x+2y)^5}.}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 8 讲解提醒}
+\small
+\begin{block}{易错点}
+\begin{enumerate}
+  \item 二次求导时漏掉 $(xy')'$ 或 $2yy''$；
+  \item 代入 $y'$ 后通分化简不彻底；
+  \item 最后一步忘了再代回 $1+2y'$。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{概念 3：参数方程求导法}
+\small
+\begin{block}{参数方程}
+若
+\[
+x=\varphi(t),\qquad y=\psi(t),
+\]
+并且 $\varphi'(t)\ne0$，则在局部可把 $y$ 看成 $x$ 的函数，并有
+\[
+\boxed{\frac{dy}{dx}=\frac{\psi'(t)}{\varphi'(t)}}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{概念 3：参数方程求导法}
+\small
+\begin{block}{继续求高阶导数}
+先把 $\dfrac{dy}{dx}$ 看成关于参数 $t$ 的函数，再对 $x$ 求导：
+\[
+\frac{d^2y}{dx^2}
+=\frac{d}{dt}\!\left(\frac{dy}{dx}\right)\Big/\frac{dx}{dt},
+\]
+\[
+\frac{d^3y}{dx^3}
+=\frac{d}{dt}\!\left(\frac{d^2y}{dx^2}\right)\Big/\frac{dx}{dt}.
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{例题 9}
+\small
+\begin{block}{题目}
+将例题 8 中的椭圆用参数方程表示为
+\[
+x=\frac{2}{\sqrt3}\cos t,\qquad
+y=\sin t-\frac{1}{\sqrt3}\cos t,
+\]
+求 $y$ 对 $x$ 的前三阶导数：$y_x'$, $y_{xx}''$, $y_{xxx}'''$。
+\end{block}
+
+\vspace{0.4em}
+\textbf{思路提示：}先算 $x_t',y_t'$，再求 $\dfrac{dy}{dx}$，之后统一对 $t$ 求导再除以 $x_t'$。
+\end{frame}
+
+\begin{frame}[t]{例题 9 解答}
+\small
+先求参数导数：
+\[
+x_t'=-\frac{2}{\sqrt3}\sin t,\qquad
+y_t'=\cos t+\frac{1}{\sqrt3}\sin t.
+\]
+因此
+\[
+y_x'=\frac{y_t'}{x_t'}
+=\frac{\cos t+\frac1{\sqrt3}\sin t}{-\frac{2}{\sqrt3}\sin t}.
+\]
+把分子分母同乘 $\sqrt3$，得
+\[
+y_x'=\frac{\sqrt3\cos t+\sin t}{-2\sin t}
+=-\frac{\sqrt3}{2}\cot t-\frac12.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 9 解答（续 1）}
+\small
+再求二阶导数：
+\[
+y_{xx}''=\frac{d}{dt}(y_x')\Big/x_t'.
+\]
+先算
+\[
+\frac{d}{dt}\left(-\frac{\sqrt3}{2}\cot t-\frac12\right)
+=\frac{\sqrt3}{2}\csc^2 t.
+\]
+所以
+\[
+y_{xx}''
+=\frac{\frac{\sqrt3}{2}\csc^2 t}{-\frac{2}{\sqrt3}\sin t}
+=-\frac34\csc^3 t.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 9 解答（续 2）}
+\small
+最后求三阶导数：
+\[
+y_{xxx}'''=\frac{d}{dt}(y_{xx}'')\Big/x_t'.
+\]
+因为
+\[
+\frac{d}{dt}\left(-\frac34\csc^3 t\right)
+=-\frac34\cdot 3\csc^2 t\cdot(-\csc t\cot t)
+=\frac94\csc^3 t\cot t,
+\]
+所以
+\[
+y_{xxx}'''
+=\frac{\frac94\csc^3 t\cot t}{-\frac{2}{\sqrt3}\sin t}
+=-\frac{9\sqrt3}{8}\frac{\cos t}{\sin^5 t}.
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 9 解答（续 3）}
+\small
+因此
+\[
+\boxed{
+y_x'=-\frac{\sqrt3}{2}\cot t-\frac12,\quad
+y_{xx}''=-\frac34\csc^3 t,\quad
+y_{xxx}'''=-\frac{9\sqrt3}{8}\frac{\cos t}{\sin^5 t}.
+}
+\]
+\end{frame}
+
+\begin{frame}[t]{例题 9 板书顺序}
+\small
+\begin{block}{板书顺序}
+\begin{enumerate}
+  \item 先写 $x_t',y_t'$；
+  \item 再写 $y_x'=\dfrac{y_t'}{x_t'}$；
+  \item 之后统一用“对 $t$ 求导再除以 $x_t'$”来推二阶、三阶导数。
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[t]{小结}
+\small
+\begin{block}{本节三条主线}
+\begin{enumerate}
+  \item Leibniz 公式：适合处理乘积型高阶导数；
+  \item 隐函数求导：把方程当作恒等式直接求导；
+  \item 参数方程求导：先对参数求导，再除以 $x_t'$。
+\end{enumerate}
+\end{block}
+
+\begin{alertblock}{做题习惯}
+高阶导数题不要盲目硬算，先找结构、找规律、找递推；该展开的中间步骤要写清楚，尤其是求导来源和代入化简过程。
+\end{alertblock}
+\end{frame}
+
+\end{document}
+

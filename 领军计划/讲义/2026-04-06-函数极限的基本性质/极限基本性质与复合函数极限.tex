@@ -1,0 +1,1618 @@
+﻿\documentclass[aspectratio=169,11pt]{ctexbeamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+
+
+
+
+% Unified Yingxing Beamer footer and visual style.
+\newcommand{\huayinglogo}{assets/logo1.jpg}
+\newcommand{\huayingslogan}{英行培优，成绩无忧；英行相伴，刮目相看}
+
+\setbeamersize{text margin left=8mm,text margin right=8mm}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamercolor{structure}{fg=blue!70!black}
+\setbeamercolor{frametitle}{bg=blue!75!black,fg=white}
+\setbeamercolor{block title}{bg=blue!10,fg=black}
+\setbeamercolor{block body}{bg=blue!2,fg=black}
+\setbeamercolor{author in head/foot}{bg=blue!8,fg=black}
+\setbeamercolor{title in head/foot}{bg=blue!8,fg=black}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,center]{author in head/foot}%
+      \includegraphics[height=2.9ex]{\huayinglogo}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.76\paperwidth,ht=3.8ex,dp=1.2ex,center]{title in head/foot}%
+      \scriptsize \huayingslogan
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.8ex,dp=1.2ex,right]{author in head/foot}%
+      \scriptsize \insertframenumber/\inserttotalframenumber\hspace*{1em}
+    \end{beamercolorbox}%
+  }%
+}
+
+\title{函数极限的基本性质}
+\subtitle{单调有界原理与复合函数的极限}
+\author{王晨旭}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{定理 1：单调有界原理}
+设函数在 $(x_0-\delta,x_0)$ 中有定义。若函数 $f$ 满足下列条件之一：
+\begin{itemize}
+  \item $f$ 单调递增且有上界；
+  \item $f$ 单调递减且有下界；
+\end{itemize}
+则 $f$ 在 $x_0$ 处的左极限存在，并且该极限有限。
+\end{frame}
+
+\begin{frame}{定理 1：证明}
+\textbf{证明思路：}
+
+利用数列的单调性原理以及 Heine 定理即可。
+\end{frame}
+
+\begin{frame}{定理 1：注}
+\begin{itemize}
+  \item 如果 $f$ 单调递增且无上界，则 $f$ 在 $x_0$ 处的左极限为 $+\infty$。
+  \item 如果 $f$ 单调递减且无下界，则 $f$ 在 $x_0$ 处的左极限为 $-\infty$。
+  \item 对于函数的右极限，有完全类似的结论。
+\end{itemize}
+
+\vspace{0.8em}
+下面我们叙述函数极限的一些基本性质。它们与数列极限的相应性质十分相似，因此证明从略。
+\end{frame}
+
+\begin{frame}{定理 2：函数极限的基本性质（上）}
+\begin{enumerate}
+  \item \textbf{局部有界性}\par
+  如果 $f$ 在 $x_0$ 处有有限极限，则 $f$ 在 $x_0$ 的一个空心开邻域内有界。
+
+  \item \textbf{保序性}\par
+  设 $f,g$ 在 $x_0$ 处的极限分别为 $A,B$。若
+  \[
+    f(x)\ge g(x)
+  \]
+  在 $x_0$ 的一个空心开邻域内成立，则 $A\ge B$。
+
+  反之，若 $A>B$，则在 $x_0$ 的一个空心开邻域内有
+  \[
+    f(x)>g(x).
+  \]
+
+  特别地，若 $A>0$，则在 $x_0$ 的一个空心开邻域内有
+  \[
+    f(x)>0.
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{定理 2：函数极限的基本性质（中）}
+\begin{enumerate}
+\setcounter{enumi}{2}
+  \item \textbf{四则运算}\par
+  设 $f,g$ 在 $x_0$ 处都有有限极限，则
+  \[
+    \lim_{x\to x_0}\bigl[\alpha f(x)+\beta g(x)\bigr]
+    =
+    \alpha\lim_{x\to x_0}f(x)+\beta\lim_{x\to x_0}g(x),
+  \]
+  其中 $\alpha,\beta$ 为常数。
+
+  \vspace{0.6em}
+  另外，
+  \[
+    \lim_{x\to x_0} f(x)g(x)
+    =
+    \left(\lim_{x\to x_0} f(x)\right)
+    \left(\lim_{x\to x_0} g(x)\right).
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{定理 2：函数极限的基本性质（下）}
+\begin{enumerate}
+\setcounter{enumi}{2}
+  \item \textbf{四则运算（续）}\par
+  若 $\displaystyle \lim_{x\to x_0}g(x)\ne 0$，则
+  \[
+    \lim_{x\to x_0}\frac{f(x)}{g(x)}
+    =
+    \frac{\lim_{x\to x_0}f(x)}{\lim_{x\to x_0}g(x)}.
+  \]
+\end{enumerate}
+
+\vspace{0.8em}
+\textbf{注：}对于无穷远处的极限，也有完全类似的结论成立。
+
+\vspace{0.8em}
+下面关于复合函数的极限也很有用。
+\end{frame}
+
+\begin{frame}{定理 3：复合函数的极限}
+设
+\[
+  \lim_{y\to y_0} f(y)=A,\qquad \lim_{x\to x_0} g(x)=y_0.
+\]
+并且存在 $x_0$ 的一个空心开邻域，在此邻域内
+\[
+  g(x)\ne y_0.
+\]
+则复合函数 $f(g(x))$ 在 $x_0$ 处的极限为 $A$，即
+\[
+  \lim_{x\to x_0} f(g(x))=A.
+\]
+\end{frame}
+
+\begin{frame}{定理 3：证明}
+任给 $\varepsilon>0$，由
+\[
+  \lim_{y\to y_0} f(y)=A
+\]
+知，存在 $\delta>0$，当
+\[
+  0<|y-y_0|<\delta
+\]
+时，有
+\[
+  |f(y)-A|<\varepsilon.
+\]
+
+又因为
+\[
+  g(x)\to y_0\quad (x\to x_0),
+\]
+对于这个 $\delta$，存在 $\eta>0$，使得当
+\[
+  0<|x-x_0|<\eta
+\]
+时，有
+\[
+  0<|g(x)-y_0|<\delta.
+\]
+\end{frame}
+
+\begin{frame}{定理 3：证明（续）}
+由
+\[
+  0<|g(x)-y_0|<\delta
+\]
+可知，
+\[
+  |f(g(x))-A|<\varepsilon.
+\]
+
+因此，
+\[
+  \lim_{x\to x_0} f(g(x))=A.
+\]
+\end{frame}
+
+\begin{frame}{定理 3：注（1）}
+定理中的条件 $g(x)\ne y_0$ 一般不能去掉。下面给出一个例子：
+\[
+  f(y)=
+  \begin{cases}
+    1, & y\ne 0,\\
+    0, & y=0,
+  \end{cases}
+  \qquad g(x)\equiv 0.
+\]
+
+这时
+\[
+  \lim_{y\to 0} f(y)=1,
+\]
+但
+\[
+  f(g(x))=0.
+\]
+因此复合后的函数并不以 $1$ 为极限。
+
+\vspace{0.5em}
+不过，当 $f(y_0)=A$ 时，这个条件可以去掉。
+\end{frame}
+
+\begin{frame}{定理 3：注（2）}
+\begin{itemize}
+  \item 对于无穷远处的极限，以及极限为无穷大的情形，也有完全类似的结果。
+  \item 复合函数极限定理在后续计算函数极限时非常有用。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{例题 1}
+设 $a>0$，研究函数
+\[
+  \frac{a^x-1}{x}
+\]
+在 $x_0=0$ 处的极限。
+\end{frame}
+
+\begin{frame}{例题 1：解答}
+不妨设 $a\ne 1$。作变量替换
+\[
+  y=a^x-1,
+\]
+则当 $x\to 0$ 时，$y\to 0$。于是
+\[
+  \lim_{x\to 0}\frac{a^x-1}{x}
+  =
+  \lim_{y\to 0}\frac{y}{\log_a(1+y)}
+  =
+  \lim_{y\to 0}\frac{1}{\log_a(1+y)^{1/y}}
+  =
+  \frac{1}{\log_a e}
+  =
+  \ln a.
+\]
+
+因此
+\[
+  \lim_{x\to 0}\frac{a^x-1}{x}=\ln a.
+\]
+\end{frame}
+
+\begin{frame}{例题 2}
+设 $a>1,\ k\in\mathbb{R}$，求
+\[
+  \lim_{x\to +\infty}\frac{x^k}{a^x}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2：对比}
+\textbf{数列版：}
+\[
+  \text{若 }\alpha>0,\ a>1,\ \text{则 }\lim_{n\to\infty}\frac{n^\alpha}{a^n}=0.
+\]
+
+\vspace{0.8em}
+\textbf{函数版：}
+\[
+  \text{若 }a>1,\ k\in\mathbb{R},\ \text{则 }\lim_{x\to+\infty}\frac{x^k}{a^x}=0.
+\]
+
+\vspace{0.8em}
+\textbf{联系：}
+\begin{itemize}
+  \item 函数版可以通过取整，把问题夹在相邻整数点对应的数列之间。
+  \item 数列结论是函数结论证明中的关键比较对象。
+  \item 这体现了“离散情形先证，连续情形再用夹逼推广”的常见思路。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例题 2：证明}
+当 $k\ge 0,\ x>1$ 时，有
+\[
+  0<\frac{x^k}{a^x}
+  \le
+  \frac{([x]+1)^k}{a^{[x]}}
+  =
+  \frac{([x]+1)^k}{a^{[x]+1}}\cdot a.
+\]
+
+由数列结论
+\[
+  \lim_{n\to\infty}\frac{n^k}{a^n}=0
+\]
+以及夹逼原理可知
+\[
+  \lim_{x\to+\infty}\frac{x^k}{a^x}=0.
+\]
+
+当 $k<0,\ x>1$ 时，
+\[
+  0<\frac{x^k}{a^x}<a^{-x}\le a^{-[x]}.
+\]
+右端趋于 $0$，故仍有
+\[
+  \lim_{x\to+\infty}\frac{x^k}{a^x}=0.
+\]
+\end{frame}
+
+\begin{frame}{例题 3}
+设 $P(x),Q(x)$ 是次数相同的多项式，求极限
+\[
+  \lim_{x\to\infty}\frac{P(x)}{Q(x)}.
+\]
+\end{frame}
+
+\begin{frame}{例题 3：解答}
+设 $P(x),Q(x)$ 的次数均为 $n$，记
+\[
+  P(x)=a_0x^n+a_1x^{n-1}+\cdots+a_n,\qquad
+  Q(x)=b_0x^n+b_1x^{n-1}+\cdots+b_n,
+\]
+其中 $a_0,b_0\ne 0$。
+
+则
+\[
+  \frac{P(x)}{Q(x)}
+  =
+  \frac{a_0+a_1x^{-1}+\cdots+a_nx^{-n}}
+       {b_0+b_1x^{-1}+\cdots+b_nx^{-n}}.
+\]
+
+当 $x\to\infty$ 时，$x^{-1},x^{-2},\dots,x^{-n}\to 0$。由极限的四则运算性质可得
+\[
+  \lim_{x\to\infty}\frac{P(x)}{Q(x)}=\frac{a_0}{b_0}.
+\]
+\end{frame}
+
+\begin{frame}{例题 4}
+证明：如果存在极限
+\[
+  \lim_{x\to+\infty}(a\sin x+b\cos x),
+\]
+则只能有
+\[
+  a=b=0.
+\]
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例题 4：证明}
+记
+\[
+  f(x)=a\sin x+b\cos x.
+\]
+若 $\lim_{x\to+\infty}f(x)$ 存在，则任取趋于 $+\infty$ 的数列 $\{x_n\}$，数列 $\{f(x_n)\}$ 都应收敛到同一个极限。
+
+\vspace{0.5em}
+取
+\[
+  x_n=n\pi,
+\]
+则
+\[
+  f(x_n)=b(-1)^n.
+\]
+该数列收敛只可能在 $b=0$ 时成立。
+
+\vspace{0.5em}
+再取
+\[
+  x_n'=\left(n+\frac12\right)\pi,
+\]
+则
+\[
+  f(x_n')=a(-1)^n.
+\]
+同理可知必须有 $a=0$。
+
+\vspace{0.5em}
+故极限存在时只能有 $a=b=0$。
+\end{frame}
+
+\begin{frame}{例题 5}
+证明函数
+\[
+  \sin\frac1x
+\]
+在 $x=0$ 处不收敛。
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例题 5：证明}
+考虑两个都收敛到 $0$ 的数列
+\[
+  x_n=\frac{1}{2n\pi+\frac{\pi}{2}},\qquad
+  y_n=\frac{1}{2n\pi}.
+\]
+则
+\[
+  x_n\to 0,\qquad y_n\to 0.
+\]
+
+但
+\[
+  \sin\frac1{x_n}=\sin\left(2n\pi+\frac{\pi}{2}\right)=1,
+\]
+而
+\[
+  \sin\frac1{y_n}=\sin(2n\pi)=0.
+\]
+
+因此沿两条趋于 $0$ 的路径，函数值分别恒为 $1$ 和 $0$，极限不同。
+由 Heine 定理可知
+\[
+  \sin\frac1x
+\]
+在 $x=0$ 处没有极限。
+\end{frame}
+
+\begin{frame}{例题 6}
+求极限
+\[
+  \lim_{x\to 0}(\cos x)^{1/x^2}.
+\]
+\end{frame}
+
+\begin{frame}{例题 6：解答}
+这是 $1^\infty$ 型极限。利用
+\[
+  \cos x=1-2\sin^2\frac{x}{2},
+\]
+原式可化为
+\[
+  \lim_{x\to 0}\left(1-2\sin^2\frac{x}{2}\right)^{1/x^2}.
+\]
+
+设
+\[
+  u=-2\sin^2\frac{x}{2},
+\]
+则 $u\to 0$。由重要极限
+\[
+  \lim_{u\to 0}(1+u)^{1/u}=e
+\]
+可将原式改写为
+\[
+  \left(1-2\sin^2\frac{x}{2}\right)^{1/x^2}
+  =
+  \left[\left(1-2\sin^2\frac{x}{2}\right)^{-1/\left(2\sin^2\frac{x}{2}\right)}\right]^{-2\sin^2\frac{x}{2}/x^2}.
+\]
+\end{frame}
+
+\begin{frame}{例题 6：解答（续）}
+又因为
+\[
+  \lim_{x\to 0}\frac{2\sin^2(x/2)}{x^2}
+  =
+  \frac12,
+\]
+故原极限为
+\[
+  e^{-1/2}.
+\]
+\end{frame}
+
+\begin{frame}{例题 7}
+求极限
+\[
+  \lim_{x\to\infty}\left(\sin\frac1x+\cos\frac1x\right)^x.
+\]
+\end{frame}
+
+\begin{frame}[allowframebreaks]{例题 7：解答}
+这是 $1^\infty$ 型极限。记
+\[
+  A_x=\sin\frac1x+\cos\frac1x.
+\]
+则当 $x\to\infty$ 时，$A_x\to 1$，原式可写为
+\[
+  \left[1+\left(\sin\frac1x+\cos\frac1x-1\right)\right]^x.
+\]
+
+只需计算
+\[
+  \lim_{x\to\infty}x\left(\sin\frac1x+\cos\frac1x-1\right).
+\]
+由
+\[
+  \sin\frac1x\sim \frac1x,\qquad
+  \cos\frac1x-1\sim -\frac{1}{2x^2},
+\]
+可得
+\[
+  x\left(\sin\frac1x+\cos\frac1x-1\right)\to 1.
+\]
+
+因此
+\[
+  \lim_{x\to\infty}\left(\sin\frac1x+\cos\frac1x\right)^x=e.
+\]
+\end{frame}
+
+\begin{frame}{习题 1}
+设 $a>0,b>0$，求极限
+\[
+  \lim_{n\to\infty}\left(\frac{\sqrt[n]{a}+\sqrt[n]{b}}{2}\right)^n.
+\]
+\end{frame}
+
+\begin{frame}{习题 1：解答}
+利用展开式
+\[
+  a^{1/n}=e^{(\ln a)/n}=1+\frac{\ln a}{n}+o\left(\frac1n\right),
+\]
+\[
+  b^{1/n}=e^{(\ln b)/n}=1+\frac{\ln b}{n}+o\left(\frac1n\right).
+\]
+因此
+\[
+  \frac{\sqrt[n]{a}+\sqrt[n]{b}}{2}
+  =
+  1+\frac{\ln a+\ln b}{2n}+o\left(\frac1n\right).
+\]
+\end{frame}
+
+\begin{frame}{习题 1：解答（续）}
+于是
+\[
+  \left(\frac{\sqrt[n]{a}+\sqrt[n]{b}}{2}\right)^n
+  \to
+  \exp\left(\frac{\ln a+\ln b}{2}\right)
+  =
+  \sqrt{ab}.
+\]
+
+故
+\[
+  \lim_{n\to\infty}\left(\frac{\sqrt[n]{a}+\sqrt[n]{b}}{2}\right)^n=\sqrt{ab}.
+\]
+\end{frame}
+
+\begin{frame}{习题 2}
+设 $a_1,\dots,a_n$ 为正数，$n\ge 2$，
+\[
+  f(x)=\left(\frac{a_1^x+a_2^x+\cdots+a_n^x}{n}\right)^{1/x}.
+\]
+求
+\[
+  \lim_{x\to 0}f(x).
+\]
+\end{frame}
+
+\begin{frame}{习题 2：解答}
+先取对数。设
+\[
+  L=\lim_{x\to 0}\ln f(x).
+\]
+则
+\[
+  \ln f(x)=\frac1x\ln\left(\frac{a_1^x+\cdots+a_n^x}{n}\right).
+\]
+
+又因为
+\[
+  a_k^x=e^{x\ln a_k}=1+x\ln a_k+o(x)\qquad (k=1,\dots,n),
+\]
+所以
+\[
+  \frac{a_1^x+\cdots+a_n^x}{n}
+  =
+  1+x\frac{\ln a_1+\cdots+\ln a_n}{n}+o(x).
+\]
+\end{frame}
+
+\begin{frame}{习题 2：解答（续）}
+从而
+\[
+  \ln f(x)\to \frac{\ln a_1+\cdots+\ln a_n}{n}.
+\]
+于是
+\[
+  \lim_{x\to 0}f(x)
+  =
+  \exp\left(\frac{\ln a_1+\cdots+\ln a_n}{n}\right)
+  =
+  \sqrt[n]{a_1a_2\cdots a_n}.
+\]
+\end{frame}
+
+\begin{frame}{习题 3}
+计算极限
+\[
+  \lim_{n\to\infty}\prod_{k=1}^n\cos\frac{x}{2^k},
+\]
+并证明 Vi\`ete 公式
+\[
+  \frac{\pi}{2}
+  =
+  \frac{1}{
+  \sqrt{\frac12}\cdot
+  \sqrt{\frac12+\frac12\sqrt{\frac12}}\cdot
+  \sqrt{\frac12+\frac12\sqrt{\frac12+\frac12\sqrt{\frac12}}}\cdots }.
+\]
+\end{frame}
+
+\begin{frame}[allowframebreaks]{习题 3：解答}
+由二倍角公式
+\[
+  \sin t=2\sin\frac t2\cos\frac t2
+\]
+反复使用可得
+\[
+  \sin x
+  =
+  2^n\sin\frac{x}{2^n}\prod_{k=1}^n\cos\frac{x}{2^k}.
+\]
+因此
+\[
+  \prod_{k=1}^n\cos\frac{x}{2^k}
+  =
+  \frac{\sin x}{2^n\sin(x/2^n)}.
+\]
+
+令 $n\to\infty$，由于 $x/2^n\to 0$，并且
+\[
+  \frac{\sin(x/2^n)}{x/2^n}\to 1,
+\]
+所以
+\[
+  \lim_{n\to\infty}\prod_{k=1}^n\cos\frac{x}{2^k}
+  =
+  \frac{\sin x}{x}.
+\]
+\end{frame}
+
+\begin{frame}[allowframebreaks]{习题 3：Vi\`ete 公式}
+在上式中取
+\[
+  x=\frac{\pi}{2},
+\]
+便得
+\[
+  \prod_{k=1}^{\infty}\cos\frac{\pi}{2^{k+1}}=\frac{2}{\pi}.
+\]
+
+又由半角公式
+\[
+  \cos\frac{\theta}{2}=\sqrt{\frac{1+\cos\theta}{2}},
+\]
+依次可得
+\[
+  \cos\frac{\pi}{4}=\sqrt{\frac12},
+\]
+\[
+  \cos\frac{\pi}{8}=\sqrt{\frac12+\frac12\sqrt{\frac12}},
+\]
+\end{frame}
+
+\begin{frame}{习题 3：Vi\`ete 公式（续）}
+\[
+  \cos\frac{\pi}{16}
+  =
+  \sqrt{\frac12+\frac12\sqrt{\frac12+\frac12\sqrt{\frac12}}},
+\]
+等等。
+
+故上述无穷乘积正是 Vi\`ete 公式，等价地写成
+\[
+  \frac{\pi}{2}
+  =
+  \frac{1}{
+  \sqrt{\frac12}\cdot
+  \sqrt{\frac12+\frac12\sqrt{\frac12}}\cdot
+  \sqrt{\frac12+\frac12\sqrt{\frac12+\frac12\sqrt{\frac12}}}\cdots }.
+\]
+\end{frame}
+
+\begin{frame}
+  \centering
+  \vspace{2cm}
+  {\LARGE 第 2 章}
+
+  \vspace{0.8cm}
+  {\Huge 无穷小（大）量的阶}
+\end{frame}
+
+\begin{frame}{定义 2.1：无穷小与无穷大量}
+如果函数 $f$ 在 $x_0$ 处的极限为 $0$，则称 $f$ 在 $x\to x_0$ 时为无穷小量，记为
+\[
+  f(x)=o(1)\qquad (x\to x_0).
+\]
+
+如果当 $x\to x_0$ 时
+\[
+  |f(x)|\to+\infty,
+\]
+则称 $f$ 在 $x\to x_0$ 时为无穷大量。
+\end{frame}
+
+\begin{frame}{定义 2.1：注}
+\begin{itemize}
+  \item 无穷小（大）量不是一个数，而是在某点邻域内具有特定性质的函数。
+  \item 在无穷远处也可以类似地定义无穷小量与无穷大量。
+  \item 对数列也可定义：若
+  \[
+    \frac{a_n}{b_n}\to 0\qquad (n\to\infty),
+  \]
+  则称 $\{a_n\}$ 关于 $\{b_n\}$ 是无穷小量，记为
+  \[
+    a_n=o(b_n).
+  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{例题 2.1}
+说明
+\[
+  \sqrt{x+1}-1=o(1)\qquad (x\to 0).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.1：解答}
+因为
+\[
+  \sqrt{x+1}-1=\frac{x}{\sqrt{x+1}+1}\to 0\qquad (x\to 0),
+\]
+故由定义知
+\[
+  \sqrt{x+1}-1
+\]
+在 $x\to 0$ 时为无穷小量，即
+\[
+  \sqrt{x+1}-1=o(1)\qquad (x\to 0).
+\]
+\end{frame}
+
+\begin{frame}{定义 2.2：无穷小（大）量的比较}
+设 $f,g$ 在 $x\to x_0$ 时均为无穷小量或无穷大量。
+
+\vspace{0.4em}
+若当 $x\to x_0$ 时，
+\[
+  \frac{f(x)}{g(x)}
+\]
+是无穷小量，则称 $f$ 是 $g$ 的高阶无穷小（或低阶无穷大），记为
+\[
+  f(x)=o(g(x))\qquad (x\to x_0).
+\]
+
+\vspace{0.4em}
+若 $\dfrac{f}{g}$ 在 $x_0$ 的一个空心邻域内有界，则记为
+\[
+  f(x)=O(g(x))\qquad (x\to x_0).
+\]
+\end{frame}
+
+\begin{frame}{定义 2.2：同阶与等价}
+若
+\[
+  \lim_{x\to x_0}\frac{f(x)}{g(x)}=A\ne 0,
+\]
+则称 $f$ 与 $g$ 是同阶无穷小（大）量，记为
+\[
+  f(x)=O^*(g(x))\qquad (x\to x_0).
+\]
+
+特别地，当 $A=1$ 时，称 $f$ 与 $g$ 是等价无穷小（大）量，记为
+\[
+  f\sim g\qquad (x\to x_0).
+\]
+\end{frame}
+
+\begin{frame}{定义 2.2：$k$ 阶无穷小（大）量}
+设 $k>0$。
+
+若
+\[
+  |f(x)|=O^*(|x-x_0|^k)\qquad (x\to x_0),
+\]
+则称当 $x\to x_0$ 时 $f$ 是 $k$ 阶无穷小。
+
+\vspace{0.6em}
+若
+\[
+  |f(x)|=O^*(|x-x_0|^{-k})\qquad (x\to x_0),
+\]
+则称当 $x\to x_0$ 时 $f$ 是 $k$ 阶无穷大量。
+
+\vspace{0.6em}
+\textbf{注：}这些量级比较也可在无穷远处进行。
+\end{frame}
+
+\begin{frame}{例题 2.2}
+证明
+\[
+  1-\cos x\sim \frac12 x^2\qquad (x\to 0).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.2：证明}
+根据恒等式
+\[
+  1-\cos x=2\sin^2\frac{x}{2},
+\]
+有
+\[
+  \lim_{x\to 0}\frac{1-\cos x}{x^2}
+  =
+  \lim_{x\to 0}\frac{2\sin^2(x/2)}{x^2}
+  =
+  2\left(\lim_{x\to 0}\frac{\sin(x/2)}{x}\right)^2.
+\]
+
+又因为
+\[
+  \frac{\sin(x/2)}{x}
+  =
+  \frac12\cdot \frac{\sin(x/2)}{x/2}\to \frac12,
+\]
+所以
+\[
+  \lim_{x\to 0}\frac{1-\cos x}{x^2}=\frac12.
+\]
+故
+\[
+  1-\cos x\sim \frac12x^2\qquad (x\to 0).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.3}
+设 $P(x)$ 是 $n$ 次多项式，说明
+\[
+  P(x)=O^*(x^n)\qquad (x\to\infty).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.3：证明}
+设
+\[
+  P(x)=a_0x^n+a_1x^{n-1}+\cdots+a_n,\qquad a_0\ne 0.
+\]
+则
+\[
+  \frac{P(x)}{x^n}=a_0+a_1x^{-1}+\cdots+a_nx^{-n}\to a_0\ne 0
+\]
+当 $x\to\infty$ 时成立。
+
+因此
+\[
+  \lim_{x\to\infty}\frac{P(x)}{x^n}=a_0\ne 0,
+\]
+故
+\[
+  P(x)=O^*(x^n)\qquad (x\to\infty).
+\]
+\end{frame}
+
+\begin{frame}{定理 2.1：等价代换}
+设当 $x\to x_0$ 时，
+\[
+  f\sim f_1,\qquad g\sim g_1.
+\]
+如果
+\[
+  \frac{f_1}{g_1}
+\]
+在 $x_0$ 处有极限，则
+\[
+  \frac{f}{g}
+\]
+在 $x_0$ 处有极限，且极限相等；反之亦然。
+\end{frame}
+
+\begin{frame}{定理 2.1：证明}
+只要注意到
+\[
+  \frac{f}{g}
+  =
+  \left(\frac{f}{f_1}\right)
+  \left(\frac{f_1}{g_1}\right)
+  \left(\frac{g_1}{g}\right),
+\]
+并利用
+\[
+  \frac{f}{f_1}\to 1,\qquad \frac{g}{g_1}\to 1
+\]
+即可。
+
+\vspace{0.6em}
+\textbf{注：}等价代换在无穷远处也可进行。
+\end{frame}
+
+\begin{frame}{例题 2.4}
+求极限
+\[
+  \lim_{x\to 0}\frac{\sin \alpha x}{\sin \beta x}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.4：解答}
+当 $x\to 0$ 时，
+\[
+  \sin \alpha x\sim \alpha x,\qquad \sin \beta x\sim \beta x.
+\]
+由等价代换，
+\[
+  \lim_{x\to 0}\frac{\sin \alpha x}{\sin \beta x}
+  =
+  \lim_{x\to 0}\frac{\alpha x}{\beta x}
+  =
+  \frac{\alpha}{\beta}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.5}
+求极限
+\[
+  \lim_{x\to 0}\frac{\tan x-\sin x}{x^3}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.5：解答}
+当 $x\to 0$ 时，
+\[
+  \tan x-\sin x
+  =
+  \frac{\sin x}{\cos x}(1-\cos x).
+\]
+
+由
+\[
+  \sin x\sim x,\qquad \frac{1}{\cos x}\sim 1,\qquad 1-\cos x\sim \frac12x^2,
+\]
+可得
+\[
+  \tan x-\sin x\sim x\cdot 1\cdot \frac12x^2=\frac12x^3.
+\]
+
+因此
+\[
+  \lim_{x\to 0}\frac{\tan x-\sin x}{x^3}=\frac12.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.5：提醒}
+需要注意的是：等价代换\textbf{不能直接用于加法和减法}。
+
+\vspace{0.8em}
+例如当 $x\to 0$ 时，
+\[
+  \tan x\sim x,\qquad \sin x\sim x,
+\]
+但不能因此把
+\[
+  \tan x-\sin x
+\]
+直接代换为 $x-x=0$。
+
+\vspace{0.8em}
+正确做法是先化成乘除结构，再使用等价代换。
+\end{frame}
+
+\begin{frame}{例题 2.6}
+求极限
+\[
+  \lim_{x\to 0}\frac{\ln(\cos x)}{\tan^2 x}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.6：解答}
+先说明一个常用等价式：
+\[
+  \ln(1+u)\sim u\qquad (u\to 0).
+\]
+
+当 $x\to 0$ 时，由
+\[
+  \cos x=1-(1-\cos x),
+\]
+得
+\[
+  \ln(\cos x)=\ln\bigl(1-(1-\cos x)\bigr)\sim -(1-\cos x)\sim -\frac12x^2.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.6：解答（续）}
+另一方面，
+\[
+  \tan^2x=\frac{\sin^2x}{\cos^2x}\sim x^2.
+\]
+
+因此由等价代换，
+\[
+  \lim_{x\to 0}\frac{\ln(\cos x)}{\tan^2 x}
+  =
+  \lim_{x\to 0}\frac{-\frac12x^2}{x^2}
+  =
+  -\frac12.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.7}
+求极限
+\[
+  \lim_{x\to 0}\frac{\sin x-\tan x}{x^3}.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.7：解法一}
+将表达式分解为
+\[
+  \frac{\sin x-\tan x}{x^3}
+  =
+  \frac{\sin x}{x}\cdot \frac{1}{\cos x}\cdot \frac{\cos x-1}{x^2}.
+\]
+
+当 $x\to 0$ 时，
+\[
+  \frac{\sin x}{x}\to 1,\qquad \frac{1}{\cos x}\to 1,\qquad \frac{\cos x-1}{x^2}\to -\frac12.
+\]
+
+因此
+\[
+  \lim_{x\to 0}\frac{\sin x-\tan x}{x^3}=-\frac12.
+\]
+\end{frame}
+
+\begin{frame}{例题 2.7：解法二}
+也可写成
+\[
+  \frac{\sin x-\tan x}{x^3}
+  =
+  \frac{\sin x(\cos x-1)}{x^3\cos x}.
+\]
+
+当 $x\to 0$ 时，利用等价关系
+\[
+  \sin x\sim x,\qquad \cos x-1\sim -\frac12x^2,\qquad \cos x\sim 1,
+\]
+可得
+\[
+  \frac{\sin x(\cos x-1)}{x^3\cos x}
+  \sim
+  \frac{x\cdot\left(-\frac12x^2\right)}{x^3\cdot 1}
+  =
+  -\frac12.
+\]
+
+故极限仍为
+\[
+  -\frac12.
+\]
+\end{frame}
+
+\begin{frame}{小结：积式中的等价代换}
+一般地，若要求极限
+\[
+  \lim_{x\to a}uv,
+\]
+其中 $u,v$ 是 $x$ 的函数，且已知
+\[
+  u\sim u_1\qquad (x\to a),
+\]
+则可将因子 $u$ 用 $u_1$ 代替，写成
+\[
+  \lim_{x\to a}uv
+  =
+  \lim_{x\to a}\left(\frac{u}{u_1}\right)u_1v
+  =
+  \lim_{x\to a}u_1v.
+\]
+
+这说明在乘积或商式中，等价代换通常是安全的。
+\end{frame}
+
+\begin{frame}{小结：和差式中的注意事项}
+在这里要特别指出：在\textbf{加法或减法}中，不能随意使用等价代换。
+
+\vspace{0.6em}
+例如在
+\[
+  \frac{\sin x-\tan x}{x^3}
+\]
+中，下面这些代换都是没有根据的：
+
+\[
+  \sin x\sim \tan x \Rightarrow \sin x-\tan x \leadsto 0,
+\]
+\[
+  \sin x\sim x \Rightarrow \sin x-\tan x \leadsto x-\tan x,
+\]
+\[
+  \tan x\sim x \Rightarrow \sin x-\tan x \leadsto \sin x-x.
+\]
+
+这些做法都会得到错误结论。
+\end{frame}
+
+\begin{frame}{小结：和差式可代换的一个条件}
+若当 $x\to a$ 时，
+\[
+  u\sim u_1,\qquad v\sim v_1,
+\]
+并且
+\[
+  \lim_{x\to a}(u+v)\ne 0,
+\]
+则有
+\[
+  u+v\sim u_1+v_1.
+\]
+
+\vspace{0.6em}
+这说明：只有在和式本身不会因为相消而降阶时，才可以在和差式中进行等价代换。
+\end{frame}
+
+\begin{frame}{例题 2.8}
+设
+\[
+  f(x)=\frac{m}{1-x^m}-\frac{n}{1-x^n},\qquad m,n\in\mathbb{N}_+.
+\]
+求极限
+\[
+  \lim_{x\to 1}f(x).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.8：解答}
+令
+\[
+  y=x-1,
+\]
+则 $x\to 1$ 等价于 $y\to 0$。于是
+\[
+  f(1+y)=\frac{m}{1-(1+y)^m}-\frac{n}{1-(1+y)^n}.
+\]
+
+利用展开
+\[
+  (1+y)^m=1+my+\frac{m(m-1)}{2}y^2+o(y^2),
+\]
+\[
+  (1+y)^n=1+ny+\frac{n(n-1)}{2}y^2+o(y^2),
+\]
+代入后作通分化简。
+\end{frame}
+
+\begin{frame}{例题 2.8：解答（续）}
+由
+\[
+  1-(1+y)^m=-my-\frac{m(m-1)}{2}y^2+o(y^2),
+\]
+\[
+  1-(1+y)^n=-ny-\frac{n(n-1)}{2}y^2+o(y^2),
+\]
+可得
+\[
+  f(1+y)
+  =
+  \frac{m}{-my-\frac{m(m-1)}{2}y^2+o(y^2)}
+  -
+  \frac{n}{-ny-\frac{n(n-1)}{2}y^2+o(y^2)}.
+\]
+
+分别约去首项后，保留到二阶，可得
+\[
+  f(1+y)=\frac12(m-n)+o(1)\qquad (y\to 0).
+\]
+\end{frame}
+
+\begin{frame}{例题 2.8：结论}
+因此
+\[
+  \lim_{x\to 1}\left(\frac{m}{1-x^m}-\frac{n}{1-x^n}\right)
+  =
+  \frac12(m-n).
+\]
+\end{frame}
+
+\begin{frame}{注：Peano 余项思想}
+上题所用方法已经超出了简单的等价代换。其核心是保留更高阶的无穷小：
+\[
+  (1+y)^n=1+ny+o(y)\qquad (y\to 0),
+\]
+或更精细地写成
+\[
+  (1+y)^n
+  =
+  1+ny+\frac{n(n-1)}{2}y^2+o(y^2)\qquad (y\to 0).
+\]
+
+\vspace{0.6em}
+这种写法中的 $o(y)$、$o(y^2)$ 称为余项，后面会发展为更一般的 Taylor 展开方法。
+\end{frame}
+
+\begin{frame}
+  \centering
+  \vspace{2cm}
+  {\LARGE 第 3 章}
+
+  \vspace{0.8cm}
+  {\Huge 连续函数}
+\end{frame}
+
+\begin{frame}{定义 3.1：连续性}
+如果函数 $f$ 在 $x_0$ 的一个邻域内有定义，且
+\[
+  \lim_{x\to x_0}f(x)=f(x_0),
+\]
+则称 $f$ 在 $x_0$ 处连续，$x_0$ 称为 $f$ 的一个连续点。
+
+\vspace{0.6em}
+若左极限等于 $f(x_0)$，则称 $f$ 在 $x_0$ 处左连续；
+若右极限等于 $f(x_0)$，则称 $f$ 在 $x_0$ 处右连续。
+\end{frame}
+
+\begin{frame}{定义 3.1：注}
+\begin{itemize}
+  \item 若 $x_0$ 不是连续点，则称 $x_0$ 是间断点。
+  \item $f$ 在 $x_0$ 连续当且仅当它在 $x_0$ 左连续且右连续。
+  \item Heine 描述：$f$ 在 $x_0$ 连续，当且仅当对任意 $x_n\to x_0$，都有
+  \[
+    f(x_n)\to f(x_0).
+  \]
+  \item $\varepsilon$-$\delta$ 描述：任给 $\varepsilon>0$，存在 $\delta>0$，使得当 $|x-x_0|<\delta$ 时，
+  \[
+    |f(x)-f(x_0)|<\varepsilon.
+  \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{定义 3.1：补充}
+还可以定义上半连续与下半连续：
+
+\vspace{0.6em}
+若任给 $\varepsilon>0$，存在 $\delta>0$，使得当 $|x-x_0|<\delta$ 时，
+\[
+  f(x)>f(x_0)-\varepsilon,
+\]
+则称 $f$ 在 $x_0$ 下半连续。
+
+\vspace{0.6em}
+若任给 $\varepsilon>0$，存在 $\delta>0$，使得当 $|x-x_0|<\delta$ 时，
+\[
+  f(x)<f(x_0)+\varepsilon,
+\]
+则称 $f$ 在 $x_0$ 上半连续。
+\end{frame}
+
+\begin{frame}{例题 3.1}
+根据前面的计算，下面的初等函数都是连续的：
+\[
+  C,\quad x,\quad \sin x,\quad \cos x,\quad \sqrt{x},\quad \log_a x\ (a>0,\ a\ne 1).
+\]
+\end{frame}
+
+\begin{frame}{例题 3.2}
+如果 $f$ 是连续函数，则 $|f|$ 也是连续函数。
+\end{frame}
+
+\begin{frame}{例题 3.2：证明}
+设 $f$ 在 $x_0$ 处连续，则
+\[
+  f(x)\to f(x_0)\qquad (x\to x_0).
+\]
+又由不等式
+\[
+  0\le \bigl||f(x)|-|f(x_0)|\bigr|\le |f(x)-f(x_0)|,
+\]
+结合夹逼原理可知
+\[
+  |f(x)|\to |f(x_0)|.
+\]
+故 $|f|$ 在 $x_0$ 处连续。
+\end{frame}
+
+\begin{frame}{例题 3.3}
+研究函数
+\[
+  f(x)=\frac1x\qquad (x\ne 0)
+\]
+的连续性。
+\end{frame}
+
+\begin{frame}{例题 3.3：证明}
+设 $x_0\ne 0$。任给 $\varepsilon>0$，取
+\[
+  \delta=\min\left\{\frac{|x_0|}{2},\ \frac{x_0^2\varepsilon}{2}\right\}.
+\]
+当 $|x-x_0|<\delta$ 时，
+\[
+  \left|\frac1x-\frac1{x_0}\right|
+  =
+  \frac{|x-x_0|}{|xx_0|}
+  \le
+  \frac{2|x-x_0|}{x_0^2}
+  <\varepsilon.
+\]
+故 $1/x$ 在每个 $x_0\ne 0$ 处连续，即它在其定义域内连续。
+\end{frame}
+
+\begin{frame}{例题 3.4}
+研究函数
+\[
+  f(x)=a^x\qquad (a>0)
+\]
+的连续性。
+\end{frame}
+
+\begin{frame}{例题 3.4：证明}
+当 $a=1$ 时，$f(x)\equiv 1$，显然连续。
+
+\vspace{0.6em}
+当 $a\ne 1$，任取 $x_0\in\mathbb{R}$，则
+\[
+  a^x=a^{x_0}a^{x-x_0}.
+\]
+令 $y=x-x_0$，当 $x\to x_0$ 时 $y\to 0$，于是
+\[
+  \lim_{x\to x_0}a^x
+  =
+  a^{x_0}\lim_{y\to 0}a^y
+  =
+  a^{x_0}.
+\]
+故 $a^x$ 在每一点都连续。
+\end{frame}
+
+\begin{frame}{定理 3.1：连续函数的四则运算}
+设 $f(x),g(x)$ 都在 $x_0$ 处连续，则：
+\begin{enumerate}
+  \item $\alpha f(x)+\beta g(x)$ 在 $x_0$ 处连续；
+  \item $f(x)g(x)$ 在 $x_0$ 处连续；
+  \item 当 $g(x_0)\ne 0$ 时，$\dfrac{f(x)}{g(x)}$ 在 $x_0$ 处连续。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{定理 3.1：证明}
+由函数极限的四则运算性质直接得到。
+\end{frame}
+
+\begin{frame}{例题 3.5}
+如果 $f,g$ 为连续函数，则
+\[
+  \max\{f,g\},\qquad \min\{f,g\}
+\]
+均为连续函数。
+\end{frame}
+
+\begin{frame}{例题 3.5：证明}
+由于 $f+g$、$f-g$ 和 $|f-g|$ 都连续，而
+\[
+  \max\{f,g\}=\frac12\bigl((f+g)+|f-g|\bigr),
+\]
+\[
+  \min\{f,g\}=\frac12\bigl((f+g)-|f-g|\bigr),
+\]
+因此 $\max\{f,g\}$ 与 $\min\{f,g\}$ 都连续。
+\end{frame}
+
+\begin{frame}{例题 3.6}
+有理函数在其定义域内连续。
+\end{frame}
+
+\begin{frame}{例题 3.6：说明}
+因为 $x$ 连续，所以 $x^n$ 连续；多项式由四则运算得到，因而连续。
+
+\vspace{0.6em}
+进一步，两个多项式之商在分母不为零的地方连续，因此一切有理函数都在其定义域内连续。
+\end{frame}
+
+\begin{frame}{例题 3.7}
+三角函数
+\[
+  \csc x=\frac1{\sin x},\qquad \sec x=\frac1{\cos x},\qquad
+  \tan x=\frac{\sin x}{\cos x},\qquad \cot x=\frac{\cos x}{\sin x}
+\]
+在各自定义域内连续。
+\end{frame}
+
+\begin{frame}{定理 3.2：复合函数的连续性}
+设函数 $f(y)$ 在 $y_0$ 处连续，函数 $g(x)$ 在 $x_0$ 处满足
+\[
+  \lim_{x\to x_0}g(x)=y_0,
+\]
+则
+\[
+  \lim_{x\to x_0}f(g(x))=f\!\left(\lim_{x\to x_0}g(x)\right)=f(y_0).
+\]
+
+特别地，当 $g$ 在 $x_0$ 处连续时，复合函数 $f(g(x))$ 也在 $x_0$ 处连续。
+\end{frame}
+
+\begin{frame}{定理 3.2：证明}
+因为 $f$ 在 $y_0$ 处连续，任给 $\varepsilon>0$，存在 $\delta>0$，使得当 $|y-y_0|<\delta$ 时，
+\[
+  |f(y)-f(y_0)|<\varepsilon.
+\]
+又由 $g(x)\to y_0$，存在 $\eta>0$，使得当 $0<|x-x_0|<\eta$ 时，
+\[
+  |g(x)-y_0|<\delta.
+\]
+因此
+\[
+  |f(g(x))-f(y_0)|<\varepsilon,
+\]
+故极限成立。
+\end{frame}
+
+\begin{frame}{例题 3.8}
+设 $\alpha\ne 0$，研究幂函数
+\[
+  f(x)=x^\alpha
+\]
+的连续性。
+\end{frame}
+
+\begin{frame}{例题 3.8：说明}
+若 $\alpha>0$，先说明在 $x=0$ 处连续。任给 $\varepsilon>0$，取
+\[
+  \delta=\varepsilon^{1/\alpha},
+\]
+当 $|x|<\delta$ 时，
+\[
+  |x^\alpha-0|=|x|^\alpha<\varepsilon.
+\]
+
+\vspace{0.6em}
+当 $x>0$ 时，$x^\alpha=e^{\alpha\ln x}$，由复合函数连续性知其连续；
+在允许取负值的定义域上也可作类似讨论。
+\end{frame}
+
+\begin{frame}{例题 3.8：结论}
+若 $\alpha<0$，则
+\[
+  x^\alpha=\left(\frac1x\right)^{-\alpha},
+\]
+故它在 $x\ne 0$ 的定义域内连续。
+
+\vspace{0.6em}
+总之，幂函数在其定义域内是连续的。
+\end{frame}
+
+\begin{frame}{例题 3.9}
+研究单调函数
+\[
+  f(x)=[x]
+\]
+的连续性，其中 $[x]$ 表示不超过 $x$ 的最大整数。
+\end{frame}
+
+\begin{frame}{例题 3.9：解答}
+当 $k\le x<k+1$（$k$ 为整数）时，$[x]=k$，故在每个非整数点处常值，从而连续。
+
+\vspace{0.6em}
+当 $x=k$ 为整数时，
+\[
+  \lim_{x\to k-}[x]=k-1,\qquad \lim_{x\to k+}[x]=k=[k].
+\]
+左右极限不相等，因此每个整数点都是间断点。
+\end{frame}
+
+\begin{frame}{定义 3.2：间断点}
+设 $x_0$ 为 $f(x)$ 的一个间断点。
+
+\vspace{0.6em}
+如果 $f(x)$ 在 $x_0$ 处的左极限 $f(x_0-0)$ 和右极限 $f(x_0+0)$ 都存在且有限，则称 $x_0$ 为第一类间断点；其它间断点称为第二类间断点。
+
+\vspace{0.6em}
+若左右极限不相等，则称为跳跃间断点；
+若左右极限相等但不连续，则称为可去间断点。
+\end{frame}
+
+\begin{frame}{例题 3.10}
+研究 Riemann 函数
+\[
+R(x)=
+\begin{cases}
+\dfrac1q, & x=\dfrac{p}{q},\ p,q\text{ 互素正整数},\ p<q,\\
+1, & x=0,1,\\
+0, & x\in(0,1)\text{ 中的无理数},
+\end{cases}
+\]
+的连续性。
+\end{frame}
+
+\begin{frame}{例题 3.10：结论}
+对任意 $x_0\in[0,1]$，都有
+\[
+  \lim_{x\to x_0}R(x)=0.
+\]
+因此：
+\begin{itemize}
+  \item 在无理点 $x_0$ 处，$R(x_0)=0$，所以连续；
+  \item 在有理点 $x_0$ 处，$R(x_0)>0$，所以不连续，但属于可去间断点。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{例题 3.11}
+研究函数
+\[
+f(x)=
+\begin{cases}
+\sin\dfrac1x, & x\ne 0,\\
+0, & x=0
+\end{cases}
+\]
+的连续性。
+\end{frame}
+
+\begin{frame}{例题 3.11：解答}
+我们已经知道 $\sin(1/x)$ 在 $x=0$ 处无极限，因此 $x=0$ 是该函数的第二类间断点。
+
+\vspace{0.6em}
+在其它点上，它是复合函数，因而连续。
+\end{frame}
+
+\begin{frame}{命题 3.3}
+设 $f(x)$ 是区间 $(a,b)$ 中的单调函数，$x_0\in(a,b)$。如果 $x_0$ 为 $f(x)$ 的间断点，则 $x_0$ 必为跳跃间断点。
+\end{frame}
+
+\begin{frame}{命题 3.3：证明}
+由单调性知，$f$ 在 $x_0$ 处的左极限和右极限都存在且有限。
+
+\vspace{0.6em}
+当 $f$ 单调递增时，
+\[
+  f(x_0-0)\le f(x_0)\le f(x_0+0);
+\]
+当 $f$ 单调递减时，
+\[
+  f(x_0-0)\ge f(x_0)\ge f(x_0+0).
+\]
+因此若 $x_0$ 是间断点，则左右极限必不相等，故只能是跳跃间断点。
+\end{frame}
+
+\begin{frame}{命题 3.4}
+若 $f(x)$ 是定义在区间 $I$ 中的单调函数，则 $f(x)$ 的间断点至多可数多个。
+\end{frame}
+
+\begin{frame}{命题 3.4：说明}
+不同的跳跃间断点对应互不相交的开区间
+\[
+  \bigl(f(x-0),f(x+0)\bigr).
+\]
+而实数轴上互不相交的开区间族至多可数，因此单调函数的间断点至多可数。
+\end{frame}
+
+\begin{frame}{命题 3.5}
+设 $f(x)$ 是定义在区间 $I$ 中的严格单调函数，则 $f(x)$ 连续当且仅当 $f(I)$ 也是区间。
+\end{frame}
+
+\begin{frame}{命题 3.5：说明}
+若 $f(I)$ 为区间，则 $f$ 不可能有跳跃间断点，否则值域会缺一段。
+
+\vspace{0.6em}
+反过来，若 $f$ 连续，则由介值性质可知 $f(I)$ 必为区间。
+\end{frame}
+
+\begin{frame}{推论 3.6}
+定义在区间 $I$ 上的严格单调连续函数一定可逆，且其反函数也是严格单调连续的。
+\end{frame}
+
+\begin{frame}{推论 3.6：说明}
+设 $f:I\to J=f(I)$ 严格单调连续。由于严格单调，$f$ 是一一映射，因此可逆。
+
+\vspace{0.6em}
+再由上一个命题，$J$ 为区间；同时 $f^{-1}$ 仍保持严格单调。由区间上严格单调且值域为区间，可知 $f^{-1}$ 也是连续的。
+\end{frame}
+
+\begin{frame}{定理 3.7}
+初等函数在其定义域内均为连续函数。
+\end{frame}
+
+\begin{frame}{定理 3.7：说明}
+我们已经证明了常值函数、幂函数、指数函数、对数函数和三角函数在其定义域内连续。
+
+\vspace{0.6em}
+再结合四则运算、复合运算以及反函数连续性的结论，就得到所有初等函数都在其定义域内连续。
+\end{frame}
+
+\begin{frame}{例题 3.12}
+求函数
+\[
+f(x)=\left(\frac{2+x}{1+x}\right)^{1+\sqrt{1+\sqrt{2x-1}}}
+\]
+在 $x_0=1$ 处的极限。
+\end{frame}
+
+\begin{frame}{例题 3.12：解答}
+由于 $f(x)$ 是由连续初等函数经过四则运算、开方与幂运算复合而成的，因此它在定义域内连续。
+
+\vspace{0.6em}
+于是
+\[
+  \lim_{x\to 1}f(x)=f(1)
+  =
+  \left(\frac{3}{2}\right)^{1+\sqrt{1+\sqrt{1}}}
+  =
+  \left(\frac{3}{2}\right)^{1+\sqrt2}.
+\]
+\end{frame}
+
+\end{document}
