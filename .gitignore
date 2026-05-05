@@ -6,3 +6,8 @@
 *.toc
 *.synctex.gz
 qa-page-*.png
+node_modules/
+check*.png
+test-results/
+tmp_pdf_pages/
+.pptx_deps/

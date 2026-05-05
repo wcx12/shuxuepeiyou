@@ -1,0 +1,279 @@
+:root {
+  color-scheme: light;
+  --ink: #182022;
+  --muted: #5a676b;
+  --line: #cbd5d6;
+  --paper: #f7f9f9;
+  --white: #ffffff;
+  --teal: #0f766e;
+  --red: #b42318;
+  --gold: #a15c07;
+  --blue: #2563eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 28px 0 36px;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(320px, 1.28fr);
+  min-height: 74vh;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px 0;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  max-width: 12em;
+  font-size: 44px;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.copy p:last-child {
+  max-width: 34em;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.scene-wrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  background: #eef4f4;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+#scene {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+}
+
+.scene-note {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.toolbar,
+.grid,
+.controls,
+.scan {
+  margin-top: 18px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #0b5f59;
+  border-radius: 8px;
+  background: var(--teal);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:nth-child(2) {
+  background: var(--blue);
+  border-color: #1d4ed8;
+}
+
+button:nth-child(3) {
+  background: var(--gold);
+  border-color: #854d0e;
+}
+
+button:nth-child(4) {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.panel,
+.control-group,
+.scan {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.panel p {
+  color: var(--muted);
+}
+
+.math {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.metric {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 18px 0 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.metric span {
+  color: var(--muted);
+}
+
+.metric strong {
+  color: var(--teal);
+  font-size: 24px;
+  letter-spacing: 0;
+}
+
+.hint {
+  min-height: 42px;
+  font-size: 14px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+label {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 9px 0;
+  color: var(--muted);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--teal);
+}
+
+.facts p + p {
+  margin-top: 10px;
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  align-items: end;
+  min-height: 120px;
+  gap: 4px;
+  margin-top: 14px;
+}
+
+.bar {
+  min-height: 4px;
+  background: var(--teal);
+  border-radius: 4px 4px 0 0;
+}
+
+.bar.low {
+  background: var(--red);
+}
+
+@media (max-width: 980px) {
+  .stage,
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .stage {
+    min-height: auto;
+  }
+
+  h1 {
+    max-width: 14em;
+    font-size: 34px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  main {
+    width: min(100% - 18px, 1180px);
+    padding-top: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scene-wrap,
+  #scene {
+    min-height: 420px;
+  }
+
+  .scene-note {
+    flex-direction: column;
+  }
+}

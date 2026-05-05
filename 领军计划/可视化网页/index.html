@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>领军计划可视化网页</title>
+  <style>
+    :root {
+      --ink: #102033;
+      --muted: #5c6e82;
+      --blue: #0e5ea8;
+      --gold: #c47a14;
+      --line: rgba(25, 77, 130, 0.16);
+      --card: rgba(255, 255, 255, 0.78);
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(14, 94, 168, 0.18), transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(196, 122, 20, 0.18), transparent 30rem),
+        #f6f9ff;
+    }
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+    header {
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 6vw, 56px);
+      letter-spacing: -0.04em;
+    }
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: 0 24px 70px rgba(24, 68, 115, 0.13);
+      backdrop-filter: blur(16px);
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    a.button {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 22px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">VISUALIZATIONS</p>
+      <h1>领军计划可视化网页</h1>
+      <p class="lead">这里集中放置与讲义配套的交互式网页。页面均为静态资源，可通过 GitHub Pages 在公网访问。</p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div>
+          <h2>导数题图像可视化</h2>
+          <p>展示对数、指数、参数变化、零点和极值点之间的关系，配套导数专题讲义使用。</p>
+        </div>
+        <a class="button" href="./2026-05-04-导数题图像可视化/">打开页面</a>
+      </article>
+
+      <article class="card">
+        <div>
+          <h2>四面体不等式可视化</h2>
+          <p>通过三维四面体、权重、点 P、二面角和体积差值，辅助理解空间几何不等式。</p>
+        </div>
+        <a class="button" href="./2026-05-04-四面体不等式可视化/">打开页面</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>四面体不等式可视化</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="stage">
+        <div class="copy">
+          <p class="eyebrow">四面体不等式</p>
+          <h1>把四个选项变成能看的长度、角度和差值</h1>
+          <p>
+            旋转四面体，调节权重和点 P。左边看几何对象，右边看每个式子离
+            “恒成立”还有多远。
+          </p>
+        </div>
+        <div class="scene-wrap">
+          <div id="scene"></div>
+          <div class="scene-note">
+            <span id="shapeName">正四面体</span>
+            <span>拖动旋转，滚轮缩放</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="toolbar">
+        <button id="regularBtn" type="button">正四面体</button>
+        <button id="tiltBtn" type="button">倾斜四面体</button>
+        <button id="flatBtn" type="button">接近扁平</button>
+        <button id="scanBtn" type="button">随机试 800 个锐角四面体</button>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h2>A：二面角和面法向量</h2>
+          <p>
+            外法向量满足
+            <span class="math">cos θ<sub>ij</sub> = -n<sub>i</sub> · n<sub>j</sub></span>。
+            因此 A 左减右就是
+            <span class="math">|Σ x<sub>i</sub>n<sub>i</sub>|²</span>。
+          </p>
+          <div class="metric">
+            <span>A 差值</span>
+            <strong id="aGap">0</strong>
+          </div>
+          <p class="hint" id="aHint">长度平方不会小于 0。</p>
+        </article>
+
+        <article class="panel">
+          <h2>B：点 P 和加权质心 G</h2>
+          <p>
+            设 <span class="math">G = Σx<sub>i</sub>A<sub>i</sub> / Σx<sub>i</sub></span>。
+            B 左减右等于
+            <span class="math">(Σx<sub>i</sub>)² |PG|²</span>。
+          </p>
+          <div class="metric">
+            <span>B 差值</span>
+            <strong id="bGap">0</strong>
+          </div>
+          <p class="hint" id="bHint">当 P 与 G 重合，差值正好为 0。</p>
+        </article>
+
+        <article class="panel">
+          <h2>C：边长和体积</h2>
+          <p>
+            正四面体给出等号。改变形状后，可以观察
+            <span class="math">Σa<sub>i</sub>²a<sub>j</sub>² - Σa<sub>i</sub>⁴</span>
+            与体积项的关系。
+          </p>
+          <div class="metric">
+            <span>C 左减右</span>
+            <strong id="cGap">0</strong>
+          </div>
+          <p class="hint" id="cHint">正四面体是 sharp 的参照模型。</p>
+        </article>
+
+        <article class="panel">
+          <h2>D：六个锐二面角的乘积</h2>
+          <p>
+            正四面体有
+            <span class="math">cos θ = 1/3</span>，所以
+            <span class="math">Πcos θ<sub>ij</sub> = 1/729</span>。
+          </p>
+          <div class="metric">
+            <span>D 左边</span>
+            <strong id="dValue">0</strong>
+          </div>
+          <p class="hint" id="dHint">如果选项写严格大于，正四面体会卡住它。</p>
+        </article>
+      </section>
+
+      <section class="controls">
+        <div class="control-group">
+          <h2>权重 x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, x<sub>4</sub></h2>
+          <label>x1 <input id="x1" type="range" min="0.2" max="4" step="0.1" value="1" /></label>
+          <label>x2 <input id="x2" type="range" min="0.2" max="4" step="0.1" value="1" /></label>
+          <label>x3 <input id="x3" type="range" min="0.2" max="4" step="0.1" value="1" /></label>
+          <label>x4 <input id="x4" type="range" min="0.2" max="4" step="0.1" value="1" /></label>
+        </div>
+
+        <div class="control-group">
+          <h2>点 P 的位置</h2>
+          <label>Px <input id="px" type="range" min="-2" max="2" step="0.05" value="0" /></label>
+          <label>Py <input id="py" type="range" min="-2" max="2" step="0.05" value="0" /></label>
+          <label>Pz <input id="pz" type="range" min="-1" max="3" step="0.05" value="0.8" /></label>
+        </div>
+
+        <div class="control-group facts">
+          <h2>当前几何量</h2>
+          <p id="acuteState">二面角状态：计算中</p>
+          <p id="volumeState">体积：计算中</p>
+          <p id="angleState">最小二面角：计算中</p>
+        </div>
+      </section>
+
+      <section class="scan">
+        <h2>随机搜索记录</h2>
+        <p id="scanSummary">点击“随机试 800 个锐角四面体”，看看 D 的严格不等式为什么危险。</p>
+        <div id="scanBars" class="bars" aria-label="随机搜索结果"></div>
+      </section>
+    </main>
+
+    <script src="./vendor/three.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>导数题图像可视化</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <p class="eyebrow">Derivative Visualizer</p>
+        <h1>导数题图像总览</h1>
+        <p class="sidebar-copy">把题目、参数、原函数和导函数放在同一个页面里联动查看。</p>
+      </div>
+      <div id="problem-nav" class="problem-nav"></div>
+    </aside>
+
+    <main class="main-panel">
+      <section class="hero-card">
+        <div>
+          <p id="topic-label" class="topic-label"></p>
+          <div id="problem-title" class="problem-title"></div>
+        </div>
+        <div id="formula-box" class="formula-box"></div>
+      </section>
+
+      <section class="content-grid">
+        <div class="left-column">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>题目信息</h3>
+            </div>
+            <div class="panel-body">
+              <div id="problem-statement" class="statement"></div>
+              <div id="focus-points" class="chip-list"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>参数控制</h3>
+            </div>
+            <div id="controls" class="panel-body controls-body"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>关键信息</h3>
+            </div>
+            <div class="panel-body">
+              <div id="metrics" class="metric-grid"></div>
+              <div id="analysis-notes" class="notes"></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="right-column">
+          <article class="panel plot-panel">
+            <div class="panel-head">
+              <h3>原函数图像</h3>
+              <div class="panel-actions">
+                <p class="panel-subtitle">蓝线为 <span class="inline-math" id="function-inline"></span></p>
+                <button type="button" class="expand-button" data-plot-kind="function">全屏查看</button>
+              </div>
+            </div>
+            <div id="function-plot" class="plot"></div>
+          </article>
+
+          <article class="panel plot-panel">
+            <div class="panel-head">
+              <h3>导函数图像</h3>
+              <div class="panel-actions">
+                <p class="panel-subtitle">红线为 <span class="inline-math" id="derivative-inline"></span></p>
+                <button type="button" class="expand-button" data-plot-kind="derivative">全屏查看</button>
+              </div>
+            </div>
+            <div id="derivative-plot" class="plot"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="plot-modal" class="plot-modal hidden" aria-hidden="true">
+    <div class="plot-modal-backdrop" data-close-modal="true"></div>
+    <div class="plot-modal-card" role="dialog" aria-modal="true" aria-labelledby="plot-modal-title">
+      <div class="plot-modal-head">
+        <div>
+          <p id="plot-modal-topic" class="plot-modal-topic"></p>
+          <h3 id="plot-modal-title" class="plot-modal-title"></h3>
+        </div>
+        <button type="button" id="plot-modal-close" class="plot-modal-close" aria-label="关闭">×</button>
+      </div>
+      <div id="plot-modal-math" class="plot-modal-math"></div>
+      <div id="plot-modal-canvas" class="plot-modal-canvas"></div>
+    </div>
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+  <script defer src="./problems.js"></script>
+  <script defer src="./app.js"></script>
+</body>
+</html>
