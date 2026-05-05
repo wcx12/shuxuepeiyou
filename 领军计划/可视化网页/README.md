@@ -2,9 +2,9 @@
 
 公网入口：
 
-- 总入口：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/
-- 导数题图像可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-导数题图像可视化/
-- 四面体不等式可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-四面体不等式可视化/
+- 总入口：https://wcx12.github.io/shuxuepeiyou-visualizations/
+- 导数题图像可视化：https://wcx12.github.io/shuxuepeiyou-visualizations/2026-05-04-导数题图像可视化/
+- 四面体不等式可视化：https://wcx12.github.io/shuxuepeiyou-visualizations/2026-05-04-四面体不等式可视化/
 
 ## 维护约定
 
