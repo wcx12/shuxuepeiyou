@@ -2,12 +2,14 @@
 
 公网入口：
 
-- 总入口：https://wcx12.github.io/shuxuepeiyou-visualizations/
-- 导数题图像可视化：https://wcx12.github.io/shuxuepeiyou-visualizations/2026-05-04-导数题图像可视化/
-- 四面体不等式可视化：https://wcx12.github.io/shuxuepeiyou-visualizations/2026-05-04-四面体不等式可视化/
+- 总入口：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/
+- 导数题图像可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-导数题图像可视化/
+- 四面体不等式可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-四面体不等式可视化/
 
 ## 维护约定
 
 每个可视化项目单独放在一个目录中，保留 `index.html`、`styles.css`、`app.js`、必要的数据文件和必要的本地依赖。
 
 不要提交 `node_modules/`、本地检查截图、测试结果、临时构建产物或外部平台专用部署脚本。
+
+新增可视化网页时，必须同步更新本目录的入口页 `index.html`，并在对应讲义目录中新增或更新 `可视化引用.md`。如果暂时没有对应讲义，应在本目录 README 中说明该网页的适用场景，避免误挂到不相关讲义。
