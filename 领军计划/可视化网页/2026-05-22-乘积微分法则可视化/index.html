@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>乘积微分法则：二维与三维可视化</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #334155;
+      --soft-line: #94a3b8;
+      --base: #dbeafe;
+      --du: #fed7aa;
+      --dv: #bbf7d0;
+      --dw: #fef3c7;
+      --corner: #ede9fe;
+      --accent: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 28px 20px 36px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 27px;
+      font-weight: 760;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.055);
+    }
+
+    .canvas-card {
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .controls {
+      padding: 16px;
+    }
+
+    .mode {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #334155;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    button.active {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      color: #1d4ed8;
+    }
+
+    .control { margin-bottom: 14px; }
+    .control:last-child { margin-bottom: 0; }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      gap: 12px;
+    }
+
+    label { font-weight: 650; font-size: 14px; }
+    .value { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    .formula-card {
+      margin-top: 16px;
+      padding: 16px 18px;
+    }
+
+    .formula {
+      font-size: 20px;
+      font-weight: 760;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .explain {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      padding: 10px;
+      background: #f8fafc;
+      min-height: 70px;
+    }
+
+    .metric .name {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    .metric .num {
+      font-size: 17px;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 13px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .swatch {
+      width: 13px;
+      height: 13px;
+      border-radius: 4px;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+    }
+
+    .note {
+      margin-top: 12px;
+      padding: 11px 13px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .controls { order: -1; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>乘积微分法则的几何意义</h1>
+    <p class="subtitle">用二维面积和三维体积理解：乘积的微分只保留“每次只改变一个方向”的一阶薄片。</p>
+
+    <section class="layout">
+      <div>
+        <div class="card canvas-card">
+          <svg id="viz" viewBox="0 0 820 500" role="img" aria-label="乘积微分法则二维与三维可视化">
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+                <path d="M0,0 L8,4 L0,8 z" fill="#475569" />
+              </marker>
+            </defs>
+            <rect x="0" y="0" width="820" height="500" fill="#fff" />
+            <g id="plot"></g>
+          </svg>
+        </div>
+
+        <div class="card formula-card">
+          <div class="formula" id="formulaLine"></div>
+          <p class="explain" id="explainLine"></p>
+          <div class="metrics">
+            <div class="metric"><div class="name" id="baseName">原量</div><div class="num" id="mBase"></div></div>
+            <div class="metric"><div class="name">一阶项</div><div class="num" id="mLinear"></div></div>
+            <div class="metric"><div class="name">高阶项</div><div class="num" id="mHigher"></div></div>
+            <div class="metric"><div class="name">真实变化</div><div class="num" id="mTotal"></div></div>
+          </div>
+          <div class="legend" id="legend"></div>
+          <div class="note" id="note"></div>
+        </div>
+      </div>
+
+      <aside class="card controls">
+        <div class="mode">
+          <button id="mode2" class="active">二维 uv</button>
+          <button id="mode3">三维 uvw</button>
+        </div>
+        <div class="control">
+          <div class="label-row"><label for="u">u</label><span class="value" id="uVal"></span></div>
+          <input id="u" type="range" min="1" max="8" step="0.1" value="4" />
+        </div>
+        <div class="control">
+          <div class="label-row"><label for="v">v</label><span class="value" id="vVal"></span></div>
+          <input id="v" type="range" min="1" max="6" step="0.1" value="2.6" />
+        </div>
+        <div class="control" id="wControl">
+          <div class="label-row"><label for="w">w</label><span class="value" id="wVal"></span></div>
+          <input id="w" type="range" min="1" max="5" step="0.1" value="2.2" />
+        </div>
+        <div class="control">
+          <div class="label-row"><label for="du">du</label><span class="value" id="duVal"></span></div>
+          <input id="du" type="range" min="0" max="1.6" step="0.05" value="0.45" />
+        </div>
+        <div class="control">
+          <div class="label-row"><label for="dv">dv</label><span class="value" id="dvVal"></span></div>
+          <input id="dv" type="range" min="0" max="1.4" step="0.05" value="0.35" />
+        </div>
+        <div class="control" id="dwControl">
+          <div class="label-row"><label for="dw">dw</label><span class="value" id="dwVal"></span></div>
+          <input id="dw" type="range" min="0" max="1.2" step="0.05" value="0.3" />
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    let mode = 2;
+    const ids = ["u", "v", "w", "du", "dv", "dw"];
+    const $ = id => document.getElementById(id);
+    const plot = $("plot");
+    const fmt = x => Number(x).toFixed(2).replace(/\.00$/, "");
+
+    function svgEl(name, attrs = {}) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+      return el;
+    }
+
+    function text(x, y, content, size = 17, weight = 650, anchor = "middle", color = "#111827") {
+      const el = svgEl("text", {
+        x, y,
+        "font-size": size,
+        "font-weight": weight,
+        "text-anchor": anchor,
+        "dominant-baseline": "middle",
+        fill: color
+      });
+      el.textContent = content;
+      return el;
+    }
+
+    function rect(x, y, w, h, fill, stroke = "#334155", sw = 1.35, opacity = 1) {
+      return svgEl("rect", {
+        x, y,
+        width: Math.max(0, w),
+        height: Math.max(0, h),
+        fill, stroke,
+        "stroke-width": sw,
+        opacity
+      });
+    }
+
+    function line(x1, y1, x2, y2, opts = {}) {
+      const el = svgEl("line", {
+        x1, y1, x2, y2,
+        stroke: opts.stroke || "#475569",
+        "stroke-width": opts.sw || 1.25
+      });
+      if (opts.dash) el.setAttribute("stroke-dasharray", opts.dash);
+      if (opts.arrow) {
+        el.setAttribute("marker-start", "url(#arrow)");
+        el.setAttribute("marker-end", "url(#arrow)");
+      }
+      return el;
+    }
+
+    function poly(points, fill, stroke = "#334155", opacity = 1, sw = 1.25) {
+      return svgEl("polygon", {
+        points: points.map(p => p.join(",")).join(" "),
+        fill, stroke,
+        opacity,
+        "stroke-width": sw,
+        "stroke-linejoin": "round"
+      });
+    }
+
+    function pAdd(a, b) { return [a[0] + b[0], a[1] + b[1]]; }
+
+    function setLegend(items) {
+      $("legend").innerHTML = items.map(([color, label]) =>
+        `<span class="legend-item"><span class="swatch" style="background:${color}"></span>${label}</span>`
+      ).join("");
+    }
+
+    function drawDim(x1, y1, x2, y2, label, lx, ly) {
+      plot.appendChild(line(x1, y1, x2, y2, { arrow: true, stroke: "#64748b", sw: 1.15 }));
+      plot.appendChild(text(lx, ly, label, 16, 650, "middle", "#334155"));
+    }
+
+    function draw2D(u, v, du, dv) {
+      const base = u * v;
+      const firstTop = u * dv;
+      const firstRight = v * du;
+      const corner = du * dv;
+      const linear = firstTop + firstRight;
+      const total = linear + corner;
+
+      $("baseName").textContent = "原面积 uv";
+      $("mBase").textContent = fmt(base);
+      $("mLinear").textContent = fmt(linear);
+      $("mHigher").textContent = fmt(corner);
+      $("mTotal").textContent = fmt(total);
+      $("formulaLine").innerHTML = "d(uv) = u·dv + v·du";
+      $("explainLine").innerHTML = `当前一阶项：u·dv + v·du = ${fmt(firstTop)} + ${fmt(firstRight)} = ${fmt(linear)}。`;
+      $("note").textContent = "二维图只显示一个小角块 du·dv，它是二阶小量；微分近似时忽略它。";
+      setLegend([
+        ["var(--base)", "uv"],
+        ["var(--dv)", "u·dv"],
+        ["var(--du)", "v·du"],
+        ["var(--corner)", "du·dv"]
+      ]);
+
+      const x0 = 155, y0 = 382;
+      const scale = Math.min(470 / (u + du || 1), 270 / (v + dv || 1));
+      const U = u * scale, V = v * scale, DU = du * scale, DV = dv * scale;
+
+      plot.appendChild(text(410, 42, "二维：面积变化", 23, 760));
+      plot.appendChild(text(410, 72, "新增面积 = 两个一阶薄片 + 一个二阶小角块", 14, 500, "middle", "#64748b"));
+
+      plot.appendChild(rect(x0, y0 - V, U, V, "var(--base)", "#334155", 1.35, 0.95));
+      plot.appendChild(rect(x0, y0 - V - DV, U, DV, "var(--dv)", "#334155", 1.1, 0.95));
+      plot.appendChild(rect(x0 + U, y0 - V, DU, V, "var(--du)", "#334155", 1.1, 0.95));
+      plot.appendChild(rect(x0 + U, y0 - V - DV, DU, DV, "var(--corner)", "#334155", 1.1, 0.95));
+
+      plot.appendChild(line(x0 + U, y0 - V - DV, x0 + U, y0, { dash: "5 5", stroke: "#64748b" }));
+      plot.appendChild(line(x0, y0 - V, x0 + U + DU, y0 - V, { dash: "5 5", stroke: "#64748b" }));
+      plot.appendChild(rect(x0, y0 - V - DV, U + DU, V + DV, "none", "#0f172a", 1.8));
+
+      plot.appendChild(text(x0 + U / 2, y0 - V / 2, "uv", 25, 760));
+      if (DV > 17) plot.appendChild(text(x0 + U / 2, y0 - V - DV / 2, "u·dv", 17, 720));
+      if (DU > 20) plot.appendChild(text(x0 + U + DU / 2, y0 - V / 2, "v·du", 17, 720));
+      if (DU > 18 && DV > 15) plot.appendChild(text(x0 + U + DU / 2, y0 - V - DV / 2, "du·dv", 12, 700));
+
+      drawDim(x0, y0 + 34, x0 + U, y0 + 34, "u", x0 + U / 2, y0 + 58);
+      if (DU > 8) drawDim(x0 + U, y0 + 34, x0 + U + DU, y0 + 34, "du", x0 + U + DU / 2, y0 + 58);
+      drawDim(x0 - 34, y0, x0 - 34, y0 - V, "v", x0 - 58, y0 - V / 2);
+      if (DV > 8) drawDim(x0 - 34, y0 - V, x0 - 34, y0 - V - DV, "dv", x0 - 58, y0 - V - DV / 2);
+    }
+
+    function boxPoints(O, ax, ay, az) {
+      const A = pAdd(O, ax), B = pAdd(O, ay), C = pAdd(O, az);
+      const AB = pAdd(A, ay), AC = pAdd(A, az), BC = pAdd(B, az), ABC = pAdd(AB, az);
+      return { O, A, B, C, AB, AC, BC, ABC };
+    }
+
+    function drawCuboid(O, ax, ay, az, fill, label, labelOffset = [0, 0], opacity = 0.86) {
+      const p = boxPoints(O, ax, ay, az);
+      plot.appendChild(poly([p.O, p.A, p.AB, p.B], fill, "#334155", opacity));
+      plot.appendChild(poly([p.B, p.AB, p.ABC, p.BC], fill, "#334155", opacity * 0.96));
+      plot.appendChild(poly([p.A, p.AC, p.ABC, p.AB], fill, "#334155", opacity * 0.92));
+      plot.appendChild(poly([p.C, p.AC, p.ABC, p.BC], fill, "#334155", opacity * 0.72));
+
+      plot.appendChild(line(p.O[0], p.O[1], p.A[0], p.A[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.O[0], p.O[1], p.B[0], p.B[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.O[0], p.O[1], p.C[0], p.C[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.A[0], p.A[1], p.AB[0], p.AB[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.B[0], p.B[1], p.AB[0], p.AB[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.C[0], p.C[1], p.AC[0], p.AC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.A[0], p.A[1], p.AC[0], p.AC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.B[0], p.B[1], p.BC[0], p.BC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.C[0], p.C[1], p.BC[0], p.BC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.AB[0], p.AB[1], p.ABC[0], p.ABC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.AC[0], p.AC[1], p.ABC[0], p.ABC[1], { stroke: "#334155" }));
+      plot.appendChild(line(p.BC[0], p.BC[1], p.ABC[0], p.ABC[1], { stroke: "#334155" }));
+
+      if (label) {
+        const center = [(p.O[0] + p.ABC[0]) / 2 + labelOffset[0], (p.O[1] + p.ABC[1]) / 2 + labelOffset[1]];
+        plot.appendChild(text(center[0], center[1], label, 17, 760));
+      }
+      return p;
+    }
+
+    function leader(x1, y1, x2, y2, label, color) {
+      plot.appendChild(line(x1, y1, x2, y2, { stroke: "#64748b", sw: 1 }));
+      plot.appendChild(svgEl("circle", { cx: x1, cy: y1, r: 3.2, fill: color, stroke: "#334155", "stroke-width": 1 }));
+      plot.appendChild(text(x2 + 8, y2, label, 15, 720, "start", color));
+    }
+
+    function draw3D(u, v, w, du, dv, dw) {
+      const base = u * v * w;
+      const tDu = v * w * du;
+      const tDv = u * w * dv;
+      const tDw = u * v * dw;
+      const linear = tDu + tDv + tDw;
+      const total = (u + du) * (v + dv) * (w + dw) - base;
+      const higher = total - linear;
+
+      $("baseName").textContent = "原体积 uvw";
+      $("mBase").textContent = fmt(base);
+      $("mLinear").textContent = fmt(linear);
+      $("mHigher").textContent = fmt(higher);
+      $("mTotal").textContent = fmt(total);
+      $("formulaLine").innerHTML = "d(uvw) = vw·du + uw·dv + uv·dw";
+      $("explainLine").innerHTML = `当前一阶项：vw·du + uw·dv + uv·dw = ${fmt(tDu)} + ${fmt(tDv)} + ${fmt(tDw)} = ${fmt(linear)}。`;
+      $("note").textContent = "三维图只强调三个一阶薄片。其他同时改变两个或三个方向形成的小块统一记为高阶项，不再逐块画出。";
+      setLegend([
+        ["var(--base)", "uvw"],
+        ["var(--du)", "vw·du"],
+        ["var(--dv)", "uw·dv"],
+        ["var(--dw)", "uv·dw"],
+        ["var(--corner)", "高阶项"]
+      ]);
+
+      plot.appendChild(text(410, 42, "三维：体积变化", 23, 760));
+      plot.appendChild(text(410, 72, "只突出三个一阶薄片；高阶小块合并标注", 14, 500, "middle", "#64748b"));
+
+      const scale = Math.min(330 / (u + du), 210 / (v + dv), 200 / (w + dw));
+      const O = [175, 382];
+      const ax = [u * scale, 0];
+      const ay = [v * scale * 0.55, -v * scale * 0.34];
+      const az = [0, -w * scale];
+      const dax = [du * scale, 0];
+      const day = [dv * scale * 0.55, -dv * scale * 0.34];
+      const daz = [0, -dw * scale];
+
+      const pBase = drawCuboid(O, ax, ay, az, "var(--base)", "uvw", [6, 4], 0.92);
+
+      // Three first-order slabs, placed only on the positive faces.
+      const pDu = drawCuboid(pBase.A, dax, ay, az, "var(--du)", "", [0, 0], 0.9);
+      const pDv = drawCuboid(pBase.B, ax, day, az, "var(--dv)", "", [0, 0], 0.82);
+      const pDw = drawCuboid(pBase.C, ax, ay, daz, "var(--dw)", "", [0, 0], 0.88);
+
+      // One tiny symbolic higher-order corner only; do not clutter the drawing.
+      const cornerO = pBase.ABC;
+      const tiny = 18;
+      plot.appendChild(poly([
+        cornerO,
+        [cornerO[0] + tiny, cornerO[1]],
+        [cornerO[0] + tiny + 10, cornerO[1] - 8],
+        [cornerO[0] + 10, cornerO[1] - 8]
+      ], "var(--corner)", "#334155", 0.9));
+
+      // Clean leader labels on the right, outside the cuboid.
+      const labelX = 640;
+      leader(pDu.AB[0] - 3, pDu.AB[1] + 28, labelX, 180, "vw·du", "#c2410c");
+      leader(pDv.ABC[0] - 5, pDv.ABC[1] + 20, labelX, 220, "uw·dv", "#15803d");
+      leader(pDw.ABC[0] - 12, pDw.ABC[1] + 14, labelX, 260, "uv·dw", "#a16207");
+      leader(cornerO[0] + 15, cornerO[1] - 7, labelX, 300, "高阶项", "#7e22ce");
+
+      // Minimal dimension marks.
+      drawDim(O[0], O[1] + 30, O[0] + ax[0], O[1] + 30, "u", O[0] + ax[0] / 2, O[1] + 54);
+      drawDim(O[0] - 28, O[1], O[0] - 28, O[1] + az[1], "w", O[0] - 52, O[1] + az[1] / 2);
+      plot.appendChild(line(O[0] - 4, O[1] + 12, O[0] + ay[0] - 4, O[1] + ay[1] + 12, { arrow: true, stroke: "#64748b", sw: 1.15 }));
+      plot.appendChild(text(O[0] + ay[0] / 2 - 12, O[1] + ay[1] / 2 + 30, "v", 16, 650, "middle", "#334155"));
+    }
+
+    function update() {
+      const u = parseFloat($("u").value);
+      const v = parseFloat($("v").value);
+      const w = parseFloat($("w").value);
+      const du = parseFloat($("du").value);
+      const dv = parseFloat($("dv").value);
+      const dw = parseFloat($("dw").value);
+
+      ids.forEach(id => $(id + "Val").textContent = fmt(parseFloat($(id).value)));
+      $("wControl").classList.toggle("hidden", mode !== 3);
+      $("dwControl").classList.toggle("hidden", mode !== 3);
+      $("mode2").classList.toggle("active", mode === 2);
+      $("mode3").classList.toggle("active", mode === 3);
+
+      plot.innerHTML = "";
+      if (mode === 2) draw2D(u, v, du, dv);
+      else draw3D(u, v, w, du, dv, dw);
+    }
+
+    $("mode2").onclick = () => { mode = 2; update(); };
+    $("mode3").onclick = () => { mode = 3; update(); };
+    ids.forEach(id => $(id).addEventListener("input", update));
+    update();
+  </script>
+</body>
+</html>
