@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>凸函数可视化</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Convex Function</p>
+        <h1>凸函数可视化</h1>
+        <p>把弦线、割线斜率、Jensen、切线支撑和习题中的关键证明机制放在同一个交互页面中。</p>
+      </div>
+      <nav id="scene-nav" class="scene-nav" aria-label="可视化模块"></nav>
+    </aside>
+
+    <main class="main-panel">
+      <section class="hero">
+        <div>
+          <p id="scene-kicker" class="scene-kicker"></p>
+          <h2 id="scene-title"></h2>
+          <p id="scene-description" class="scene-description"></p>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article class="visual-panel">
+          <div class="panel-head">
+            <div>
+              <h3>动态图像</h3>
+              <p id="visual-caption"></p>
+            </div>
+            <button id="reset-button" type="button">重置</button>
+          </div>
+          <svg id="visual" viewBox="0 0 900 540" role="img" aria-label="凸函数交互可视化"></svg>
+        </article>
+
+        <aside class="control-panel">
+          <section>
+            <h3>参数控制</h3>
+            <div id="controls" class="controls"></div>
+          </section>
+
+          <section>
+            <h3>当前读数</h3>
+            <div id="metrics" class="metrics"></div>
+          </section>
+
+          <section>
+            <h3>课堂提示</h3>
+            <div id="notes" class="notes"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="./scenes.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

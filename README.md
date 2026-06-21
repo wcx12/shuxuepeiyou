@@ -14,6 +14,7 @@ https://wcx12.github.io/shuxuepeiyou/
     YYYY-MM-DD-主题/
       主题.tex
       主题.pdf
+      主题.pptx        # 可选：由 PDF 转出的课堂放映版
       assets/
       可视化引用.md
     模板/
@@ -42,7 +43,12 @@ https://wcx12.github.io/shuxuepeiyou/
 
 讲义目录和主文件命名遵循 `YYYY-MM-DD-主题` 与 `主题.tex` / `主题.pdf` 的形式，不写章节号、文件类型词或过程版本词。例如不使用 `第四章`、`PPT讲义`、`audited`、`完整审计版` 等作为目录名或主文件名的一部分。
 
-仓库只保留源码、PDF 和必要资源。不上传 `.ppt`、`.pptx`，也不提交 LaTeX 编译产生的 `.aux`、`.log`、`.nav`、`.snm`、`.toc`、`.out`、`.synctex.gz` 等临时文件。
+仓库默认只保留源码、PDF 和必要资源。若课堂需要 PowerPoint 放映版，可以在对应讲义目录中保留由 PDF 转出的同名 `.pptx`；不提交临时版、过程版或无法追溯来源的 `.ppt/.pptx` 文件。LaTeX 编译产生的 `.aux`、`.log`、`.nav`、`.snm`、`.toc`、`.out`、`.synctex.gz` 等临时文件不提交。
+
+当前已整理的近期讲义包括：
+
+- [凸函数与洛必达法则](领军计划/讲义/2026-06-20-凸函数/凸函数.pdf)：含 LaTeX 源码、PDF、课堂放映版 PPTX，以及配套可视化引用。
+- [Taylor 展开](领军计划/讲义/2026-06-21-Taylor展开/Taylor展开.pdf)：含 LaTeX 源码和 PDF。
 
 ## 可视化网页
 
@@ -52,6 +58,7 @@ https://wcx12.github.io/shuxuepeiyou/
 - 导数题图像可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-导数题图像可视化/
 - 四面体不等式可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-04-四面体不等式可视化/
 - 乘积微分法则可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-05-22-乘积微分法则可视化/
+- 凸函数可视化：https://wcx12.github.io/shuxuepeiyou/领军计划/可视化网页/2026-06-20-凸函数可视化/
 
 后续新增可视化网页时，应同步完成以下事项：
 

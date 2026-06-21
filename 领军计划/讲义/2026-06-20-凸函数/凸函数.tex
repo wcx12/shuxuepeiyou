@@ -12,8 +12,8 @@
 \makeatother
 \usepackage{yingxing-beamer}
 
-\title{凸函数}
-\subtitle{定义、Jensen 不等式与导数判别}
+\title{凸函数与洛必达法则}
+\subtitle{Jensen 不等式、导数判别与未定式极限}
 \author{王晨旭}
 \date{}
 
@@ -319,6 +319,23 @@ f\!\left(\sum_{i=1}^{k+1}\lambda_i x_i\right)
 \]
 \end{frame}
 
+\begin{frame}{什么是 Lipschitz 函数}
+\small
+\begin{block}{定义}
+设 $f$ 定义在集合 $E$ 上。若存在常数 $M>0$，使得对任意 $x,y\in E$ 都有
+\[
+  |f(x)-f(y)|\le M|x-y|,
+\]
+则称 $f$ 在 $E$ 上为 \textbf{Lipschitz 函数}，也称满足 Lipschitz 条件。
+\end{block}
+
+\begin{itemize}
+  \item 直观上，$M$ 控制函数值变化的最大速度：横向变化很小时，纵向变化也不会突然暴涨。
+  \item Lipschitz 连续比普通连续更强：只要满足上式，就一定连续。
+  \item 若 $f$ 可导且 $|f'(x)|\le M$，由中值定理可知 $f$ 是 Lipschitz 函数。
+\end{itemize}
+\end{frame}
+
 \begin{frame}{命题 1：连续性}
 \small
 \begin{block}{命题}
@@ -335,6 +352,11 @@ f\!\left(\sum_{i=1}^{k+1}\lambda_i x_i\right)
 
 \begin{frame}{连续性的证明思路}
 \small
+证明 $f$ 在 $[a,b]$ 上是 Lipschitz 函数，就是要找到一个统一的常数 $M$，使
+\[
+  |f(x)-f(y)|\le M|x-y|.
+\]
+
 取 $a',b'\in I$，使
 \[
   a'<a<b<b'.
@@ -1208,6 +1230,875 @@ $F_\varepsilon$ 应该表现得像凸函数。
 所以 $f$ 为线性函数。
 \end{frame}
 
+\section{洛必达法则}
+
+\begin{frame}{新章节：洛必达法则}
+\small
+在计算函数极限时，经常会遇到
+\[
+  \lim_{x\to x_0}\frac{f(x)}{g(x)}
+\]
+不能直接代入的情形。最常见的两类未定式是
+\[
+  \frac00,\qquad \frac{\infty}{\infty}.
+\]
+
+\begin{block}{核心想法}
+如果 $f$ 与 $g$ 同时趋于 $0$ 或同时趋于无穷大，那么可以比较它们的变化速度：
+\[
+  \frac{f(x)}{g(x)}
+  \quad\Longleftrightarrow\quad
+  \frac{f'(x)}{g'(x)}.
+\]
+\end{block}
+
+洛必达法则本质上是 Cauchy 中值定理在极限计算中的应用。
+\end{frame}
+
+\begin{frame}{什么时候可以用洛必达法则}
+\small
+\begin{itemize}
+  \item \textbf{$0/0$ 型：}
+  \[
+    f(x)\to0,\qquad g(x)\to0.
+  \]
+  \item \textbf{$\infty/\infty$ 型：}
+  \[
+    |f(x)|\to\infty,\qquad |g(x)|\to\infty.
+  \]
+  \item 其他未定式，如
+  \[
+    0\cdot\infty,\quad \infty-\infty,\quad 1^\infty,\quad 0^0,\quad \infty^0
+  \]
+  通常要先通过代数变形或取对数，转化成前两类之一。
+\end{itemize}
+
+\begin{block}{使用前检查}
+不能看到分式就求导。必须先确认它确实是未定式，并且导数比值的极限存在或为无穷。
+\end{block}
+\end{frame}
+
+\begin{frame}{定理 2：洛必达法则（$0/0$ 型）}
+\small
+\begin{block}{定理}
+设 $f,g$ 在 $(a,b)$ 中可导，且
+\[
+  g'(x)\ne0,\qquad x\in(a,b).
+\]
+若
+\[
+  \lim_{x\to a+}f(x)=0,\qquad \lim_{x\to a+}g(x)=0,
+\]
+且极限
+\[
+  \lim_{x\to a+}\frac{f'(x)}{g'(x)}
+\]
+存在或为无穷，则
+\[
+  \lim_{x\to a+}\frac{f(x)}{g(x)}
+  =
+  \lim_{x\to a+}\frac{f'(x)}{g'(x)}.
+\]
+\end{block}
+
+左极限、双侧极限以及 $x\to\pm\infty$ 的形式也有相应版本。
+\end{frame}
+
+\begin{frame}{定理 2：证明思路（一）}
+\small
+补充定义
+\[
+  f(a)=g(a)=0.
+\]
+对任意 $x\in(a,b)$，由 Cauchy 中值定理，存在 $\xi\in(a,x)$，使得
+\[
+  \frac{f(x)-f(a)}{g(x)-g(a)}
+  =
+  \frac{f'(\xi)}{g'(\xi)}.
+\]
+于是
+\[
+  \frac{f(x)}{g(x)}
+  =
+  \frac{f'(\xi)}{g'(\xi)}.
+\]
+\end{frame}
+
+\begin{frame}{定理 2：证明思路（二）}
+\small
+上一页把原来的函数比值转化为导数比值：
+\[
+  \frac{f(x)}{g(x)}
+  =
+  \frac{f'(\xi)}{g'(\xi)},\qquad \xi\in(a,x).
+\]
+当 $x\to a+$ 时，$\xi\to a+$。如果
+\[
+  \frac{f'(x)}{g'(x)}\to L,
+\]
+那么
+\[
+  \frac{f'(\xi)}{g'(\xi)}\to L,
+\]
+从而
+\[
+  \lim_{x\to a+}\frac{f(x)}{g(x)}=L.
+\]
+\end{frame}
+
+\begin{frame}{洛必达法则的注意事项}
+\small
+\begin{enumerate}
+  \item 如果一次求导后仍是未定式，且条件仍满足，可以继续使用：
+  \[
+    \lim\frac{f(x)}{g(x)}
+    =
+    \lim\frac{f'(x)}{g'(x)}
+    =
+    \lim\frac{f''(x)}{g''(x)}.
+  \]
+  \item $x\to\infty$ 时的结论可以由变量代换 $t=1/x$ 转化为 $t\to0+$ 的情形。
+  \item 洛必达法则给的是充分条件。若
+  \[
+    \lim\frac{f'(x)}{g'(x)}
+  \]
+  不存在，不能推出原极限不存在。
+\end{enumerate}
+
+\begin{block}{典型反例}
+取
+\[
+  f(x)=x^2\sin\frac1x,\qquad g(x)=x.
+\]
+则 $f(x)/g(x)=x\sin(1/x)\to0$，但 $f'(x)/g'(x)$ 不存在极限。
+\end{block}
+\end{frame}
+
+\begin{frame}{例 6：三次小量的极限}
+\small
+\textbf{求极限}
+\[
+  \lim_{x\to0}\frac{x-\sin x}{x^3}.
+\]
+
+\textbf{解答：}
+这是 $0/0$ 型，可以连续使用洛必达法则：
+\[
+\begin{aligned}
+\lim_{x\to0}\frac{x-\sin x}{x^3}
+&=\lim_{x\to0}\frac{1-\cos x}{3x^2}\\
+&=\lim_{x\to0}\frac{\sin x}{6x}\\
+&=\frac16.
+\end{aligned}
+\]
+
+这里也可以用 Taylor 展开：
+\[
+  \sin x=x-\frac{x^3}{6}+o(x^3).
+\]
+\end{frame}
+
+\begin{frame}{例 7：二阶 Taylor 余项}
+\small
+\textbf{设 $f''(x_0)$ 存在，求}
+\[
+  \lim_{h\to0}
+  \frac{f(x_0+h)-f(x_0)-f'(x_0)h}{h^2}.
+\]
+
+\textbf{解答：}
+由洛必达法则，
+\[
+\begin{aligned}
+&\lim_{h\to0}
+\frac{f(x_0+h)-f(x_0)-f'(x_0)h}{h^2}\\
+&\qquad =
+\lim_{h\to0}
+\frac{f'(x_0+h)-f'(x_0)}{2h}
+=\frac12 f''(x_0).
+\end{aligned}
+\]
+
+这个例子说明：洛必达法则常常是在计算 Taylor 余项的系数。
+\end{frame}
+
+\begin{frame}{例 8：指数型极限先取对数}
+\small
+\textbf{求极限}
+\[
+  \lim_{x\to\infty}\left[e^{-1}\left(1+\frac1x\right)^x\right]^x.
+\]
+
+\textbf{解答：}
+设原式为 $F(x)$，先取对数：
+\[
+  \ln F(x)
+  =x\left[x\ln\left(1+\frac1x\right)-1\right]
+  =
+  \frac{\ln(1+x^{-1})-x^{-1}}{x^{-2}}.
+\]
+令 $y=1/x$，则
+\[
+\begin{aligned}
+\lim_{x\to\infty}\ln F(x)
+&=\lim_{y\to0+}\frac{\ln(1+y)-y}{y^2}\\
+&=\lim_{y\to0+}\frac{(1+y)^{-1}-1}{2y}
+=-\frac12.
+\end{aligned}
+\]
+因此
+\[
+  \lim_{x\to\infty}F(x)=e^{-1/2}.
+\]
+\end{frame}
+
+\begin{frame}{定理 3：洛必达法则（$\infty/\infty$ 型）}
+\small
+\begin{block}{定理}
+设 $f,g$ 在 $(a,b)$ 中可导，且 $g'(x)\ne0$。若
+\[
+  \lim_{x\to a+}g(x)=\infty,
+\]
+且
+\[
+  \lim_{x\to a+}\frac{f'(x)}{g'(x)}=l
+\]
+存在或为无穷，则
+\[
+  \lim_{x\to a+}\frac{f(x)}{g(x)}
+  =
+  \lim_{x\to a+}\frac{f'(x)}{g'(x)}
+  =l.
+\]
+\end{block}
+
+证明仍然来自 Cauchy 中值定理。直观上，分母已经趋于无穷，端点常数项对比值没有影响。
+\end{frame}
+
+\begin{frame}{例 9：用 $\infty/\infty$ 型处理增长速度}
+\small
+\textbf{设 $f$ 在 $(a,+\infty)$ 中可微。}
+
+\begin{enumerate}
+  \item 若
+  \[
+    \lim_{x\to+\infty}x f'(x)=1,
+  \]
+  则
+  \[
+    \lim_{x\to+\infty}f(x)=+\infty.
+  \]
+  \item 若存在 $\alpha>0$，使
+  \[
+    \lim_{x\to+\infty}\bigl(\alpha f(x)+x f'(x)\bigr)=\beta,
+  \]
+  则
+  \[
+    \lim_{x\to+\infty}f(x)=\frac{\beta}{\alpha}.
+  \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{例 9：证明}
+\small
+(1) 因为 $\ln x\to+\infty$，由洛必达法则，
+\[
+  \lim_{x\to+\infty}\frac{f(x)}{\ln x}
+  =
+  \lim_{x\to+\infty}\frac{f'(x)}{1/x}
+  =
+  \lim_{x\to+\infty}x f'(x)=1.
+\]
+于是 $f(x)\sim \ln x$，所以 $f(x)\to+\infty$。
+
+\vspace{0.5em}
+(2) 因为 $x^\alpha\to+\infty$，所以
+\[
+\begin{aligned}
+\lim_{x\to+\infty}f(x)
+&=\lim_{x\to+\infty}\frac{x^\alpha f(x)}{x^\alpha}\\
+&=\lim_{x\to+\infty}
+\frac{\alpha x^{\alpha-1}f(x)+x^\alpha f'(x)}
+{\alpha x^{\alpha-1}}\\
+&=\frac1\alpha
+\lim_{x\to+\infty}\bigl(\alpha f(x)+x f'(x)\bigr)
+=\frac{\beta}{\alpha}.
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}{洛必达法则：使用流程}
+\small
+\begin{enumerate}
+  \item \textbf{先判型：}确认是 $0/0$ 或 $\infty/\infty$。
+  \item \textbf{再变形：}若是 $0\cdot\infty$、$\infty-\infty$ 或指数型未定式，先转化。
+  \item \textbf{再求导：}只对分子、分母分别求导，不是对整个分式求导。
+  \item \textbf{最后检查：}求导后的极限必须存在或为无穷，才可直接套用结论。
+\end{enumerate}
+
+\begin{block}{常见错误}
+\[
+  \lim\frac{f}{g}
+  \ne
+  \lim\left(\frac{f}{g}\right)'.
+\]
+洛必达法则使用的是
+\[
+  \frac{f'}{g'},
+\]
+不是商的导数。
+\end{block}
+\end{frame}
+
+\begin{frame}{洛必达法则习题}
+\begin{itemize}
+  \item 下面习题按题目页与解答页分开。
+  \item 指数型极限优先取对数。
+  \item 若可以用 Taylor 展开快速判断，解答中也会保留对应思路，帮助检查洛必达计算。
+\end{itemize}
+\end{frame}
+
+\begin{frame}{洛必达练习 1：题目}
+\scriptsize
+\textbf{求下列极限，其中第 (4) 小题默认 $a>0$：}
+\[
+\begin{array}{lll}
+(1)\ \displaystyle\lim_{x\to0}\frac{e^x-1}{\sin x};&
+(2)\ \displaystyle\lim_{x\to0}\frac{\tan x-x}{x-\sin x};&
+(3)\ \displaystyle\lim_{x\to1}x^{\frac1{1-x}};\\[1.2em]
+(4)\ \displaystyle\lim_{x\to a}\frac{a^x-x^a}{x-a};&
+(5)\ \displaystyle\lim_{x\to0}\left(\frac1x-\frac1{e^x-1}\right);&
+(6)\ \displaystyle\lim_{x\to0}\left(\frac{\tan x}{x}\right)^{1/x^2};\\[1.2em]
+(7)\ \displaystyle\lim_{x\to0}\frac{x\cot x-1}{x^2};&
+(8)\ \displaystyle\lim_{x\to1}\frac{1-\sin\frac{\pi x}{2}}{1-x^2};&
+(9)\ \displaystyle\lim_{x\to0}\left(\frac1{x^2}-\frac1{\sin^2 x}\right).
+\end{array}
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 1：解答（一）}
+\small
+\[
+\begin{aligned}
+(1)\quad
+\lim_{x\to0}\frac{e^x-1}{\sin x}
+&=\lim_{x\to0}\frac{e^x}{\cos x}=1.\\[0.6em]
+(2)\quad
+\lim_{x\to0}\frac{\tan x-x}{x-\sin x}
+&=\lim_{x\to0}\frac{\sec^2x-1}{1-\cos x}\\
+&=\lim_{x\to0}\frac{\tan^2x}{1-\cos x}=2.\\[0.6em]
+(3)\quad
+\ln L&=\lim_{x\to1}\frac{\ln x}{1-x}
+=\lim_{x\to1}\frac{1/x}{-1}=-1,
+\end{aligned}
+\]
+所以
+\[
+  L=e^{-1}.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 1：解答（二）}
+\small
+\[
+\begin{aligned}
+(4)\quad
+\lim_{x\to a}\frac{a^x-x^a}{x-a}
+&=a^a\ln a-a a^{a-1}
+=a^a(\ln a-1).\\[0.8em]
+(5)\quad
+\lim_{x\to0}\left(\frac1x-\frac1{e^x-1}\right)
+&=\lim_{x\to0}\frac{e^x-1-x}{x(e^x-1)}
+=\frac12.\\[0.8em]
+(6)\quad
+\ln L
+&=\lim_{x\to0}\frac{\ln(\tan x/x)}{x^2}
+=\frac13.
+\end{aligned}
+\]
+因此
+\[
+  (6)\quad L=e^{1/3}.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 1：解答（三）}
+\small
+\[
+\begin{aligned}
+(7)\quad
+\lim_{x\to0}\frac{x\cot x-1}{x^2}
+&=-\frac13.\\[0.8em]
+(8)\quad
+\lim_{x\to1}\frac{1-\sin\frac{\pi x}{2}}{1-x^2}
+&=\lim_{x\to1}
+\frac{-\frac{\pi}{2}\cos\frac{\pi x}{2}}{-2x}=0.\\[0.8em]
+(9)\quad
+\frac1{x^2}-\frac1{\sin^2x}
+&=\frac{\sin^2x-x^2}{x^2\sin^2x}.
+\end{aligned}
+\]
+由
+\[
+  \sin^2x=x^2-\frac{x^4}{3}+o(x^4),
+\]
+得
+\[
+  (9)\quad \lim_{x\to0}\left(\frac1{x^2}-\frac1{\sin^2x}\right)=-\frac13.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 2：题目}
+\scriptsize
+\textbf{求下列极限，其中 $a>0$；第 (5) 小题默认 $a,b>0$ 且 $a\ne b$：}
+\[
+\begin{array}{lll}
+(1)\ \displaystyle\lim_{x\to+\infty}\frac{\ln(x\ln x)}{x^a};&
+(2)\ \displaystyle\lim_{x\to\infty}\left(\tan\frac{\pi x}{2x+1}\right)^{1/x};&
+(3)\ \displaystyle\lim_{x\to\infty}x\left[\left(1+\frac1x\right)^x-e\right];\\[1.2em]
+(4)\ \displaystyle\lim_{x\to0+}x^x;&
+(5)\ \displaystyle\lim_{x\to0}\frac{e^{ax}-e^{bx}}{\sin ax-\sin bx};&
+(6)\ \displaystyle\lim_{x\to1-}\ln x\ln(1-x);\\[1.2em]
+(7)\ \displaystyle\lim_{x\to+\infty}\frac{e^x+e^{-x}}{x^4};&
+(8)\ \displaystyle\lim_{x\to0}\left(\frac2\pi\arccos x\right)^{1/x};&
+(9)\ \displaystyle\lim_{x\to+\infty}\left(\frac\pi2-\arctan x\right)^{1/\ln x}.
+\end{array}
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 2：解答（一）}
+\small
+\[
+\begin{aligned}
+(1)\quad
+\lim_{x\to+\infty}\frac{\ln(x\ln x)}{x^a}
+&=0,
+\end{aligned}
+\]
+因为对数增长慢于任意正幂。
+
+\[
+\begin{aligned}
+(2)\quad
+\ln L
+&=\lim_{x\to\infty}\frac{\ln\tan\frac{\pi x}{2x+1}}{x}=0,
+\end{aligned}
+\]
+所以 $L=1$。
+
+\[
+\begin{aligned}
+(3)\quad
+x\left[\left(1+\frac1x\right)^x-e\right]
+&\to -\frac e2.
+\end{aligned}
+\]
+可由
+\[
+  x\ln(1+1/x)=1-\frac1{2x}+o(1/x)
+\]
+推出。
+\end{frame}
+
+\begin{frame}{洛必达练习 2：解答（二）}
+\small
+\[
+\begin{aligned}
+(4)\quad
+\ln L=\lim_{x\to0+}x\ln x=0,
+\end{aligned}
+\]
+所以 $L=1$。
+
+\[
+\begin{aligned}
+(5)\quad
+\lim_{x\to0}\frac{e^{ax}-e^{bx}}{\sin ax-\sin bx}
+&=\lim_{x\to0}
+\frac{a e^{ax}-b e^{bx}}{a\cos ax-b\cos bx}=1
+\end{aligned}
+\]
+其中默认 $a\ne b$。
+
+\[
+\begin{aligned}
+(6)\quad
+\lim_{x\to1-}\ln x\ln(1-x)=0.
+\end{aligned}
+\]
+令 $t=1-x$，则 $\ln x=\ln(1-t)\sim -t$，而 $t\ln t\to0$。
+\end{frame}
+
+\begin{frame}{洛必达练习 2：解答（三）}
+\small
+\[
+(7)\quad
+\lim_{x\to+\infty}\frac{e^x+e^{-x}}{x^4}=+\infty.
+\]
+
+\[
+\begin{aligned}
+(8)\quad
+\ln L
+&=\lim_{x\to0}\frac{\ln\left(\frac2\pi\arccos x\right)}{x}\\
+&=\lim_{x\to0}
+\frac{-1/\sqrt{1-x^2}}{\arccos x}
+=-\frac2\pi,
+\end{aligned}
+\]
+所以
+\[
+  L=e^{-2/\pi}.
+\]
+
+\[
+\begin{aligned}
+(9)\quad
+\ln L
+&=\lim_{x\to+\infty}
+\frac{\ln\left(\frac\pi2-\arctan x\right)}{\ln x}
+=-1,
+\end{aligned}
+\]
+故 $L=e^{-1}$。
+\end{frame}
+
+\begin{frame}{洛必达练习 3：题目}
+\small
+\textbf{求下列极限：}
+\[
+  (1)\quad
+  \lim_{x\to0+}\left(\frac{\sin x}{x}\right)^{1/x};
+\]
+\[
+  (2)\quad
+  \lim_{x\to0}
+  \left(\frac{a_1^x+a_2^x+\cdots+a_n^x}{n}\right)^{1/x},
+  \qquad a_i>0.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 3：解答}
+\small
+(1) 设极限为 $L$，则
+\[
+  \ln L
+  =
+  \lim_{x\to0+}\frac{\ln(\sin x/x)}{x}.
+\]
+由于
+\[
+  \ln\frac{\sin x}{x}\sim -\frac{x^2}{6},
+\]
+故
+\[
+  \ln L=0,\qquad L=1.
+\]
+
+(2) 设极限为 $L$，则
+\[
+\begin{aligned}
+\ln L
+&=\lim_{x\to0}
+\frac1x\ln\left(\frac{a_1^x+\cdots+a_n^x}{n}\right)\\
+&=
+\frac{\ln a_1+\cdots+\ln a_n}{n}.
+\end{aligned}
+\]
+因此
+\[
+  L=(a_1a_2\cdots a_n)^{1/n}.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 4：题目}
+\small
+\textbf{设 $f'''(x_0)$ 存在，求极限}
+\[
+  \lim_{h\to0}
+  \frac{1}{h^3}
+  \bigl[
+  f(x_0+3h)-3f(x_0+2h)+3f(x_0+h)-f(x_0)
+  \bigr].
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 4：解答}
+\small
+括号内是三阶向前差分：
+\[
+  \Delta_h^3 f(x_0)
+  =
+  f(x_0+3h)-3f(x_0+2h)+3f(x_0+h)-f(x_0).
+\]
+由 Taylor 展开，
+\[
+  f(x_0+kh)
+  =
+  f(x_0)+f'(x_0)kh+\frac12f''(x_0)k^2h^2
+  +\frac16f'''(x_0)k^3h^3+o(h^3).
+\]
+代入组合系数
+\[
+  1,-3,3,-1
+\]
+后，常数项、一阶项、二阶项全部抵消，只剩三阶项，故极限为
+\[
+  f'''(x_0).
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 5：题目}
+\small
+\textbf{设函数 $f$ 在点 $x_0$ 处 2 阶可导，且 $f''(x_0)\ne0$。由微分中值定理，当 $h$ 充分小时，存在 $\theta=\theta(h)\in(0,1)$，使得}
+\[
+  f(x_0+h)-f(x_0)=f'(x_0+\theta h)h.
+\]
+\textbf{证明}
+\[
+  \lim_{h\to0}\theta=\frac12.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 5：解答}
+\small
+由题设等式得
+\[
+  f'(x_0+\theta h)-f'(x_0)
+  =
+  \frac{f(x_0+h)-f(x_0)-f'(x_0)h}{h}.
+\]
+两边再除以 $h$：
+\[
+  \frac{f'(x_0+\theta h)-f'(x_0)}{h}
+  =
+  \frac{f(x_0+h)-f(x_0)-f'(x_0)h}{h^2}.
+\]
+右边由例 7 知趋于 $\frac12 f''(x_0)$。左边可写为
+\[
+  \theta\cdot
+  \frac{f'(x_0+\theta h)-f'(x_0)}{\theta h}.
+\]
+由于 $0<\theta<1$ 且 $h\to0$，第二个因子趋于 $f''(x_0)$。又 $f''(x_0)\ne0$，所以
+\[
+  \theta\to\frac12.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 6：题目}
+\small
+\textbf{设 $f(x)$ 在 $(a,+\infty)$ 中可微，且}
+\[
+  \lim_{x\to+\infty}f'(x)=0.
+\]
+\textbf{证明}
+\[
+  \lim_{x\to+\infty}\frac{f(x)}{x}=0.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 6：解答}
+\small
+任取 $\varepsilon>0$。由 $f'(x)\to0$，存在 $A>a$，使得当 $t>A$ 时
+\[
+  |f'(t)|<\varepsilon.
+\]
+当 $x>A$ 时，由中值定理，
+\[
+  |f(x)-f(A)|\le \varepsilon(x-A).
+\]
+于是
+\[
+  \left|\frac{f(x)}{x}\right|
+  \le
+  \frac{|f(A)|}{x}+\varepsilon\frac{x-A}{x}.
+\]
+令 $x\to+\infty$，得到
+\[
+  \limsup_{x\to+\infty}\left|\frac{f(x)}{x}\right|\le\varepsilon.
+\]
+由 $\varepsilon$ 任意，结论成立。
+\end{frame}
+
+\begin{frame}{洛必达练习 7：题目}
+\small
+\textbf{设 $f(x)$ 在 $(a,+\infty)$ 中可微，且}
+\[
+  \lim_{x\to+\infty}\bigl[f(x)+f'(x)\bigr]=l.
+\]
+\textbf{证明}
+\[
+  \lim_{x\to+\infty}f(x)=l.
+\]
+
+\vspace{0.8em}
+\textbf{提示：}考虑
+\[
+  e^x f(x).
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 7：解答}
+\small
+由于
+\[
+  \bigl(e^x f(x)\bigr)'=e^x\bigl[f(x)+f'(x)\bigr],
+\]
+所以可写
+\[
+  f(x)=\frac{e^x f(x)}{e^x}.
+\]
+当分子分母同趋于无穷时，由洛必达法则，
+\[
+  \lim_{x\to+\infty}f(x)
+  =
+  \lim_{x\to+\infty}
+  \frac{e^x[f(x)+f'(x)]}{e^x}
+  =
+  l.
+\]
+若分子不趋于无穷，也可由积分形式
+\[
+  e^x f(x)=C+\int_A^x e^t[f(t)+f'(t)]\,dt
+\]
+得到同样结论。
+\end{frame}
+
+\begin{frame}{洛必达练习 8：题目}
+\small
+\textbf{设 $a_i\in\R\ (1\le i\le n)$，求极限}
+\[
+  \lim_{x\to0}
+  \frac{1-\cos(a_1x)\cos(a_2x)\cdots\cos(a_nx)}{x^2}.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 8：解答}
+\small
+当 $x\to0$ 时，
+\[
+  \cos(a_ix)=1-\frac{a_i^2x^2}{2}+o(x^2).
+\]
+因此
+\[
+\begin{aligned}
+\prod_{i=1}^n\cos(a_ix)
+&=
+1-\frac{x^2}{2}\sum_{i=1}^n a_i^2+o(x^2).
+\end{aligned}
+\]
+所以
+\[
+\begin{aligned}
+1-\prod_{i=1}^n\cos(a_ix)
+&=
+\frac{x^2}{2}\sum_{i=1}^n a_i^2+o(x^2).
+\end{aligned}
+\]
+故所求极限为
+\[
+  \frac12\sum_{i=1}^n a_i^2.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 9：题目}
+\small
+\textbf{设 $f''(x_0)$ 存在，$f'(x_0)\ne0$。求极限}
+\[
+  \lim_{x\to x_0}
+  \left[
+  \frac1{f(x)-f(x_0)}
+  -
+  \frac1{f'(x_0)(x-x_0)}
+  \right].
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 9：解答}
+\small
+令 $h=x-x_0$，则
+\[
+  f(x_0+h)-f(x_0)
+  =
+  f'(x_0)h+\frac12f''(x_0)h^2+o(h^2).
+\]
+因此
+\[
+\begin{aligned}
+&\frac1{f(x)-f(x_0)}
+-
+\frac1{f'(x_0)(x-x_0)}\\
+&\quad =
+\frac{f'(x_0)h-[f(x_0+h)-f(x_0)]}
+[f(x_0+h)-f(x_0)]f'(x_0)h.
+\end{aligned}
+\]
+代入展开式可得极限为
+\[
+  -\frac{f''(x_0)}{2[f'(x_0)]^2}.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 10：题目}
+\small
+\textbf{设 $a_1\in(0,\pi)$，且}
+\[
+  a_{n+1}=\sin a_n,\qquad n\ge1.
+\]
+\textbf{证明}
+\[
+  \lim_{n\to\infty}\sqrt n\,a_n=\sqrt3.
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 10：解答（一）}
+\small
+因为 $0<a_{n+1}<a_n$，故 $a_n\downarrow0$。由
+\[
+  \sin x=x-\frac{x^3}{6}+o(x^3)
+\]
+得
+\[
+  a_{n+1}=a_n-\frac{a_n^3}{6}+o(a_n^3).
+\]
+令
+\[
+  b_n=\frac1{a_n^2}.
+\]
+则
+\[
+\begin{aligned}
+b_{n+1}-b_n
+&=\frac{a_n^2-a_{n+1}^2}{a_n^2a_{n+1}^2}\\
+&\to \frac13.
+\end{aligned}
+\]
+\end{frame}
+
+\begin{frame}{洛必达练习 10：解答（二）}
+\small
+上页已经得到
+\[
+  b_{n+1}-b_n\to \frac13,\qquad b_n=\frac1{a_n^2}.
+\]
+这里使用的结论是：若数列增量趋于 $c$，则平均增长率也趋于 $c$，即
+\[
+  \frac{b_n}{n}\to c.
+\]
+因此
+\[
+  \frac{b_n}{n}\to\frac13.
+\]
+因此
+\[
+  n a_n^2\to3,
+\]
+也就是
+\[
+  \sqrt n\,a_n\to\sqrt3.
+\]
+\end{frame}
+
 \begin{frame}{课堂小结}
 \begin{itemize}
   \item 凸函数的核心图像：任意弦线在图像上方。
@@ -1219,6 +2110,8 @@ $F_\varepsilon$ 应该表现得像凸函数。
   \]
   \item 连续凸函数可由中点不等式判别。
   \item 凸函数是证明不等式的重要工具：先找凸函数，再套 Jensen。
+  \item 洛必达法则处理 $0/0$ 与 $\infty/\infty$ 型极限，使用前必须先判型。
+  \item 指数型未定式通常先取对数，再转化为分式极限。
 \end{itemize}
 \end{frame}
 
